@@ -3,7 +3,6 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 
 export default function Home() {
   const { data: session } = useSession()
-  console.log(session)
 
   return (
     <Center mt={40}>
@@ -19,8 +18,12 @@ export default function Home() {
           <Flex justify="space-between" align="center" w={400} h={200}>
             <Avatar src={session.user?.image ? session.user.image : null} />
             <div>
-              <Text>Hello {session.user?.name}</Text>
-              <Text>Hello {session.user?.email}</Text>
+              <Text>name : {session.user?.name}</Text>
+              <Text>email : {session.user?.email}</Text>
+              <Text>oauth_token :{session.user?.oauth_token}</Text>
+              <Text>
+                oauth_token_secret : {session.user?.oauth_token_secret}
+              </Text>
             </div>
           </Flex>
 
