@@ -8,6 +8,9 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 const getLikedTweet = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await unstable_getServerSession(req, res, authOptions)
 
+  // Fix type? ↓
+  const limit = req.body
+
   if (!session) {
     return res.status(401).json({ message: 'You must be logged in.' })
   }
@@ -20,7 +23,7 @@ const getLikedTweet = async (req: NextApiRequest, res: NextApiResponse) => {
   })
 
   const likedTweet = await twitterClient.v1.favoriteTimeline('@nu_____ll', {
-    count: 3,
+    count: limit,
   })
 
   console.log(likedTweet)
