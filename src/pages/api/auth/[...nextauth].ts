@@ -1,7 +1,8 @@
+import { NextAuthOptions } from 'next-auth'
 import NextAuth from 'next-auth/next'
 import TwitterProvider from 'next-auth/providers/twitter'
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
     TwitterProvider({
@@ -32,4 +33,6 @@ export default NextAuth({
       return session
     },
   },
-})
+}
+
+export default NextAuth(authOptions)
