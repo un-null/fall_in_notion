@@ -18,13 +18,16 @@ const getLikedTweet = async (req: NextApiRequest, res: NextApiResponse) => {
   const twitterClient = new TwitterApi({
     appKey: process.env.TWITTER_CONSUMER_KEY,
     appSecret: process.env.TWITTER_CONSUMER_SECRET,
-    accessToken: session.user.oauth_token,
-    accessSecret: session.user.oauth_token_secret,
+    accessToken: session.user.oauth_token || '',
+    accessSecret: session.user.oauth_token_secret || '',
   })
 
-  const likedTweet = await twitterClient.v1.favoriteTimeline('@nu_____ll', {
-    count: limit,
-  })
+  const likedTweet = await twitterClient.v1.favoriteTimeline(
+    session.user.account_id || '',
+    {
+      count: limit,
+    }
+  )
 
   console.log(likedTweet)
 

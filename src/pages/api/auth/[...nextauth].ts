@@ -19,6 +19,7 @@ export const authOptions: NextAuthOptions = {
       if (account) {
         return {
           ...token,
+          account_id: account.providerAccountId,
           oauth_token: account.oauth_token,
           oauth_token_secret: account.oauth_token_secret,
         }
@@ -29,7 +30,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       session.user.oauth_token = token.oauth_token
       session.user.oauth_token_secret = token.oauth_token_secret
-
+      session.user.account_id = token.account_id
       return session
     },
   },
