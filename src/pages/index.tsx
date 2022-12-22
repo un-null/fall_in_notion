@@ -1,3 +1,5 @@
+import { ComponentProps, useState } from 'react'
+
 import {
   Button,
   Center,
@@ -6,39 +8,34 @@ import {
   Stack,
   Text,
 } from '@mantine/core'
-import { useForm } from '@mantine/form'
+import { useMutation } from '@tanstack/react-query'
 import { signIn, useSession } from 'next-auth/react'
 
 import { UserCard } from '../components'
 
-export default function Home() {
+const Home = () => {
   const { data: session } = useSession()
+  const [limit, setLimit] = useState<number | undefined>(0)
 
-  const form = useForm<{ limit: number }>({
-    initialValues: {
-      limit: 0,
-    },
-    validate: {
-      limit: (value) =>
-        value > 20 ? 'There are too many. Keep it within 50' : null,
-    },
-  })
-
-  const handleSubmit = async (value: { limit: number }) => {
-    const limit = value.limit
-    try {
-      const res = await fetch('/api/twitter/getLikedTweet', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application.json',
-        },
-        body: JSON.stringify(limit),
-      })
-      const data = await res.json()
-      console.log(data)
-    } catch (error) {
-      console.log(error)
+  const mutateFunc = async () => {
+    const res = await fetch('/api/twitter/getLikedTweet', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application.json',
+      },
+      body: JSON.stringify(limit),
+    })
+    if (!res.ok) {
+      throw new Error(`${res.status}:${res.statusText}`)
     }
+    return res.json()
+  }
+
+  const mutation_func = useMutation(mutateFunc)
+
+  const handleSubmit: ComponentProps<'form'>['onSubmit'] = async (e) => {
+    e.preventDefault()
+    mutation_func.mutate()
   }
 
   return (
@@ -58,7 +55,7 @@ export default function Home() {
             image={session.user.image}
           />
 
-          <form onSubmit={form.onSubmit(handleSubmit)}>
+          <form onSubmit={handleSubmit}>
             <Stack spacing="xs">
               <NumberInput
                 name="limit"
@@ -66,7 +63,8 @@ export default function Home() {
                 description="From 1 to 20"
                 withAsterisk
                 hideControls
-                {...form.getInputProps('limit')}
+                value={limit}
+                onChange={(value) => setLimit(value)}
               />
 
               {/* Fix ↓ */}
@@ -75,7 +73,7 @@ export default function Home() {
                 size="sm"
               />
 
-              <Button type="submit" mt={20} disabled={!form.values.limit}>
+              <Button type="submit" mt={20} disabled={!limit}>
                 get ♡ tweets
               </Button>
             </Stack>
@@ -89,3 +87,5 @@ export default function Home() {
     </Center>
   )
 }
+
+export default Home
