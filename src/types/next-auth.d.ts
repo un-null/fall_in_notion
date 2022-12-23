@@ -8,10 +8,12 @@ declare module 'next-auth' {
     oauth_token_secret?: string
   }
   interface Session {
+    supabaseAccessToken?: string
     user: {
       account_id?: string
       oauth_token?: string
       oauth_token_secret?: string
+      address: string
     } & DefaultSession['user']
   }
 }

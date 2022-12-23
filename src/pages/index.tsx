@@ -9,7 +9,7 @@ import {
   Text,
 } from '@mantine/core'
 import { useMutation } from '@tanstack/react-query'
-import { signIn, useSession } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 
 import { UserCard } from '../components'
 
@@ -79,9 +79,9 @@ const Home = () => {
             </Stack>
           </form>
 
-          {/* <Button mt={20} onClick={() => signOut()}>
+          <Button mt={20} onClick={() => signOut()}>
             SignOut
-          </Button> */}
+          </Button>
         </Stack>
       )}
     </Center>
