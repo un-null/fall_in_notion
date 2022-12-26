@@ -23,6 +23,7 @@
     "@supabase/supabase-js": "^2.2.1",
     "@tabler/icons": "^1.117.0",
     "@tanstack/react-query": "^4.20.4",
+    "@tanstack/react-query-devtools": "^4.20.4",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "18.11.17",
     "@types/react": "18.0.26",

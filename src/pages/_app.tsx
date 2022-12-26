@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app'
 
 import { MantineProvider } from '@mantine/core'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { SessionProvider } from 'next-auth/react'
 
 const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
@@ -20,6 +21,7 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
         <MantineProvider withGlobalStyles withNormalizeCSS>
           <Component {...pageProps} />
         </MantineProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </SessionProvider>
   )
