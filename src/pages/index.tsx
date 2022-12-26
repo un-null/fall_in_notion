@@ -11,7 +11,7 @@ import {
 import { useMutation } from '@tanstack/react-query'
 import { signIn, signOut, useSession } from 'next-auth/react'
 
-import { UserCard } from '../components'
+import { NotionForm, UserCard } from '../components'
 
 const Home = () => {
   const { data: session } = useSession()
@@ -47,7 +47,15 @@ const Home = () => {
         </Stack>
       )}
 
-      {session?.user && (
+      {!session?.user.integration_token || !session?.user.database_id ? (
+        <Stack>
+          <NotionForm />
+
+          <Button mt={20} onClick={() => signOut()}>
+            SignOut
+          </Button>
+        </Stack>
+      ) : (
         <Stack align="center">
           <UserCard
             name={session.user.name}

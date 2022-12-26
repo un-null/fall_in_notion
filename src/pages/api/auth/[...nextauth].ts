@@ -1,4 +1,5 @@
 import { SupabaseAdapter } from '@next-auth/supabase-adapter'
+import { createClient } from '@supabase/supabase-js'
 import jwt from 'jsonwebtoken'
 import { NextAuthOptions } from 'next-auth'
 import NextAuth from 'next-auth/next'
@@ -33,9 +34,7 @@ export const authOptions: NextAuthOptions = {
       return token
     },
 
-    async session({ session, token, user }) {
-      console.log(user)
-
+    async session({ session, token }) {
       const signingSecret = process.env.SUPABASE_JWT_SECRET
       if (signingSecret) {
         const payload = {
@@ -45,10 +44,32 @@ export const authOptions: NextAuthOptions = {
           email: token.email,
           role: 'authenticated',
         }
+
+        const supabase = createClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL,
+          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+          {
+            global: {
+              headers: {
+                Authorization: `Bearer ${jwt.sign(payload, signingSecret)}`,
+              },
+            },
+          }
+        )
+
+        const { data } = await supabase
+          .from('users')
+          .select('*')
+          .eq('email', session.user.email)
+          .single()
+
         session.supabaseAccessToken = jwt.sign(payload, signingSecret)
         session.user.oauth_token = token.oauth_token
         session.user.oauth_token_secret = token.oauth_token_secret
         session.user.account_id = token.account_id
+        session.user.user_id = data.id
+        session.user.integration_token = data.integration_token
+        session.user.database_id = data.database_id
       }
       return session
     },
