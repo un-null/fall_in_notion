@@ -1,9 +1,10 @@
 import { createClient } from '@supabase/supabase-js'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 
 export const useQueryDatabaseInfo = () => {
   const { data: session } = useSession()
+  const queryClient = useQueryClient()
   const supabaseAccessToken = session?.supabaseAccessToken
 
   const supabase = createClient(
@@ -22,13 +23,15 @@ export const useQueryDatabaseInfo = () => {
     if (session?.user) {
       const { data, error } = await supabase
         .from('users')
-        .select('*')
+        .select('integration_token, database_id')
         .eq('id', session?.user.user_id)
         .single()
 
       if (error) throw new Error(`${error.code} : ${error.message}`)
+
       return data
     }
+    // Fix need auth ? ↓
     return alert('user does not exist')
   }
 
@@ -36,10 +39,9 @@ export const useQueryDatabaseInfo = () => {
     queryKey: ['databaseInfo'],
     queryFn: getDatabaseInfo,
     staleTime: Infinity,
-    // Fix ↓
     onSuccess: (data) => {
       if (data) {
-        return {}
+        queryClient.setQueryData(['databaseInfo'], data)
       }
     },
   })

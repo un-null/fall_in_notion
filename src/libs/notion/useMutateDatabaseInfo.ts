@@ -3,12 +3,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 
 import { NotionDatabase } from '../../types'
-// import { useSession } from '../session'
 
 export const useMutateDatabaseInfo = () => {
   const queryClient = useQueryClient()
 
-  // const [session] = useSession({})
   const { data: session } = useSession()
   const supabaseAccessToken = session?.supabaseAccessToken
 
@@ -24,49 +22,30 @@ export const useMutateDatabaseInfo = () => {
     }
   )
 
-  const registerDatabaseInfo = useMutation(
-    async (databaseInfo: NotionDatabase) => {
-      const { data, error } = await supabase
-        .from('users')
-        .insert(databaseInfo)
-        .eq('id', session?.user.user_id)
-
-      if (error) throw new Error(`${error.code} : ${error.message}`)
-      return data
-    },
-    {
-      onSuccess: (res) => {
-        queryClient.setQueryData(['databaseInfo'], res[0])
-      },
-      // Fix any ↓
-      onError: (err: any) => {
-        alert(err.message)
-      },
-    }
-  )
-
   const updateDatabaseInfo = useMutation(
     async (databaseInfo: NotionDatabase) => {
       const { data, error } = await supabase
         .from('users')
         .update(databaseInfo)
         .eq('id', session?.user.user_id)
+        .select('integration_token, database_id')
 
       if (error) throw new Error(`${error.code} : ${error.message}`)
+
       return data
     },
     {
-      onSuccess: (res) => {
-        queryClient.setQueryData(['databaseInfo'], res[0])
+      onSuccess: (data) => {
+        if (data) {
+          queryClient.setQueryData(['databaseInfo'], data[0])
+        }
       },
-      // Fix any ↓
-      onError: (err: any) => {
+      onError: (err: Error) => {
         alert(err.message)
       },
     }
   )
   return {
-    registerDatabaseInfo,
     updateDatabaseInfo,
   }
 }

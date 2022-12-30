@@ -15,7 +15,8 @@ type FormValue = NotionDatabase
 
 export const NotionForm: FC = () => {
   const { data: session } = useSession()
-  const { registerDatabaseInfo, updateDatabaseInfo } = useMutateDatabaseInfo()
+
+  const { updateDatabaseInfo } = useMutateDatabaseInfo()
 
   const form = useForm<FormValue>({
     initialValues: {
@@ -24,19 +25,12 @@ export const NotionForm: FC = () => {
     },
   })
 
-  const handleSubmit = async (
-    values: FormValue,
-    e: FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = (values: FormValue, e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    try {
-      await updateDatabaseInfo.mutate({
-        integration_token: values.integration_token,
-        database_id: values.integration_token,
-      })
-    } catch (error) {
-      console.log(error)
-    }
+    updateDatabaseInfo.mutate({
+      integration_token: values.integration_token,
+      database_id: values.database_id,
+    })
   }
 
   return (
