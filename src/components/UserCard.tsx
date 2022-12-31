@@ -33,7 +33,7 @@ const useStyles = createStyles(() => ({
 export const UserCard: FC<Partial<Props>> = ({ name, email, image }) => {
   const { classes } = useStyles()
   return (
-    <Card shadow="sm" w={400}>
+    <Card shadow="sm" w={610}>
       <Flex justify="space-between" align="strech">
         <Stack justify="space-between">
           <ActionIcon

@@ -2,7 +2,7 @@ import { FC, FormEvent } from 'react'
 
 import Link from 'next/link'
 
-import { Box, Button, Flex, Stack, Text, TextInput } from '@mantine/core'
+import { Button, Flex, Stack, Text, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { IconQuestionCircle } from '@tabler/icons'
 import { useSession } from 'next-auth/react'
@@ -34,7 +34,7 @@ export const NotionForm: FC = () => {
   }
 
   return (
-    <Box my={40}>
+    <div>
       <Text mt={20} size="xl" weight="bold">
         Notion Form
       </Text>
@@ -77,6 +77,6 @@ export const NotionForm: FC = () => {
           </Link>
         </Stack>
       </form>
-    </Box>
+    </div>
   )
 }
