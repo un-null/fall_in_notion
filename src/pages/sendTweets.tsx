@@ -1,16 +1,7 @@
 import { createContext, Dispatch, SetStateAction, useState } from 'react'
 
-import { useRouter } from 'next/router'
-
-import {
-  Button,
-  Center,
-  createStyles,
-  Paper,
-  Text,
-  Timeline,
-} from '@mantine/core'
-import { IconCheck, IconHeart, IconHeartBroken, IconSend } from '@tabler/icons'
+import { createStyles, Paper, Text, Timeline } from '@mantine/core'
+import { IconCheck, IconHeart, IconSend } from '@tabler/icons'
 import { NextPage } from 'next'
 
 import { SendTweetsForm } from '../components'
@@ -107,34 +98,36 @@ const useStyles = createStyles((theme) => {
   }
 })
 
-export const CounterContext = createContext(0)
+// Fix type ↓
+export const FormContext = createContext<{
+  limit: number | undefined
+  count: number
+}>({
+  limit: 0,
+  count: 0,
+})
 
-export const CounterDispatchContext = createContext<
-  Dispatch<SetStateAction<number>>
->(() => {
-  throw new Error('No default value!')
+export const FormDispatchContext = createContext<{
+  setLimit: Dispatch<SetStateAction<number | undefined>>
+  setCount: Dispatch<SetStateAction<number>>
+}>({
+  setLimit: () => {
+    throw new Error('No default value!')
+  },
+  setCount: () => {
+    throw new Error('No default value!')
+  },
 })
 
 const SendTweets: NextPage = () => {
   const { classes } = useStyles()
 
   const [count, setCount] = useState(0)
-
-  const handleClick = () => {
-    setCount(count + 1)
-  }
-
-  const router = useRouter()
-
-  if (count === 5) {
-    // router.push('/')
-    alert('count = 5')
-    setCount(0)
-  }
+  const [limit, setLimit] = useState<number | undefined>(1)
 
   return (
-    <CounterContext.Provider value={count}>
-      <CounterDispatchContext.Provider value={setCount}>
+    <FormContext.Provider value={{ count, limit }}>
+      <FormDispatchContext.Provider value={{ setCount, setLimit }}>
         <Layout label="Send Liked Tweets to Notion">
           <Paper shadow="md" radius="lg" mt={40}>
             <div className={classes.wrapper}>
@@ -175,7 +168,7 @@ const SendTweets: NextPage = () => {
                     fw="bolder"
                   />
 
-                  <Timeline.Item
+                  {/* <Timeline.Item
                     title="Do you remove liked tweets on your twitter?"
                     bullet={<IconHeartBroken size={12} />}
                     c="white"
@@ -192,7 +185,8 @@ const SendTweets: NextPage = () => {
                     lineVariant="dashed"
                     c="white"
                     fw="bolder"
-                  />
+                  /> */}
+
                   <Timeline.Item
                     bullet={<IconCheck size={12} />}
                     title="Completed"
@@ -205,38 +199,18 @@ const SendTweets: NextPage = () => {
               <div className={classes.form}>
                 <Text size="lg" weight={700} className={classes.title}>
                   {/* Fix ↓ */}
-                  {count ? count + 1 : 1} / 5
+                  {count ? count + 1 : 1} / 3
                 </Text>
 
                 <div className={classes.fields}>
                   <SendTweetsForm />
-                  {/* {count === 3 && (
-                    <Flex
-                      direction="column"
-                      justify="center"
-                      align="center"
-                      gap={10}
-                      mt={20}
-                    >
-                      <Text weight="bold">Now Sending...</Text>
-                      Fix color
-                      <Loader variant="bars" color="pink" size="sm" />
-                    </Flex>
-                  )}
-                  {count === 4 && <>Success</>} */}
-
-                  <Center mt={20}>
-                    <Button color="pink" onClick={handleClick}>
-                      Next
-                    </Button>
-                  </Center>
                 </div>
               </div>
             </div>
           </Paper>
         </Layout>
-      </CounterDispatchContext.Provider>
-    </CounterContext.Provider>
+      </FormDispatchContext.Provider>
+    </FormContext.Provider>
   )
 }
 

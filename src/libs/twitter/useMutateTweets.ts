@@ -5,18 +5,16 @@ export const useMutateTweets = () => {
 
   const sendTweetsMutation = useMutation(
     async (limit: number | undefined) => {
-      const res = await fetch('/api/twitter/getLikedTweet', {
+      await fetch('/api/twitter/getLikedTweets', {
         method: 'POST',
         headers: {
           'Content-Type': 'application.json',
         },
         body: JSON.stringify(limit),
       })
-      const data = res.json()
-      return data
     },
     {
-      onSuccess: (_data) => {
+      onSuccess: () => {
         alert('Sending completed!')
       },
       onError: (error: Error) => {
@@ -25,5 +23,27 @@ export const useMutateTweets = () => {
     }
   )
 
-  return { sendTweetsMutation }
+  const removeTweetsMutation = useMutation(
+    async (limit: number | undefined) => {
+      await fetch('api/twitter/removeLikedTweets', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application.json',
+        },
+        // Fix rename ↓
+        body: JSON.stringify(limit),
+      })
+    },
+    {
+      onSuccess: () => {
+        // Fix ↓
+        alert('Removeing completed')
+      },
+      onError: (error: Error) => {
+        alert(error.message)
+      },
+    }
+  )
+
+  return { sendTweetsMutation, removeTweetsMutation }
 }

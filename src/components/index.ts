@@ -1,4 +1,5 @@
 export { SendTweetsForm } from './SendTweetsForm'
+export { RemoveTweetsForm } from './RemoveTweetsForm'
 export { DashBoard } from './DashBoard'
 export { NotionForm } from './NotionForm'
 export { UserCard } from './UserCard'

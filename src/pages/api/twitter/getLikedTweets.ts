@@ -78,14 +78,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             },
           },
         })
-
         await sleep(334)
       }
+      res.status(200).json({ message: 'OK' })
     }
 
     insertNotionDb()
-
-    res.status(200).json({ message: '♡' })
   } catch (error) {
     res.status(500).json({ message: 'Error' })
   }
