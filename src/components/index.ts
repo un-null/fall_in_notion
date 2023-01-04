@@ -1,4 +1,4 @@
-export { RetrieveTweetsForm } from './RetrieveTweetsForm'
+export { SendTweetsForm } from './SendTweetsForm'
 export { DashBoard } from './DashBoard'
 export { NotionForm } from './NotionForm'
 export { UserCard } from './UserCard'
