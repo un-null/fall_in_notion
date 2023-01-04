@@ -21,6 +21,7 @@ const useStyles = createStyles(() => ({
   main: {
     maxWidth: '1200px',
     margin: '0 auto',
+    padding: '0 16px',
   },
 }))
 

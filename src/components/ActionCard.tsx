@@ -21,7 +21,7 @@ export const ActionCard: FC<Props> = ({ name }) => {
       w={300}
       shadow="md"
       component="a"
-      href="/"
+      href={name === 'Remove ♡ On Twitter' ? '/' : '/sendTweets'}
       sx={{ ':hover': { color: color } }}
     >
       {name === 'Remove ♡ On Twitter' ? (
