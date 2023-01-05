@@ -20,7 +20,7 @@ export const DashBoard: FC = () => {
       {!databaseInfoCache?.integration_token ||
       !databaseInfoCache?.database_id ? (
         <Center mt={40}>
-          <NotionForm />
+          <NotionForm mode="register" />
         </Center>
       ) : (
         <Stack align="center">

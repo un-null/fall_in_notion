@@ -10,16 +10,21 @@ import { NotionDatabase } from '../types'
 
 // Fix name ↓
 type FormValue = Required<NotionDatabase>
+type Props = {
+  mode: 'register' | 'edit'
+}
 
-export const NotionForm: FC = () => {
+export const NotionForm: FC<Props> = ({ mode }) => {
   const { data: session } = useSession()
 
   const { updateDatabaseInfo } = useMutateDatabaseInfo()
 
   const form = useForm<FormValue>({
     initialValues: {
-      integration_token: '',
-      database_id: '',
+      integration_token: session?.user.integration_token
+        ? session.user.integration_token
+        : '',
+      database_id: session?.user.database_id ? session.user.database_id : '',
     },
 
     validate: {
@@ -39,12 +44,14 @@ export const NotionForm: FC = () => {
 
   return (
     <div>
-      <Text mt={20} size="xl" weight="bold">
-        Notion Form
-      </Text>
+      {mode === 'register' && (
+        <Text mt={20} size="xl" weight="bold">
+          Notion Form
+        </Text>
+      )}
 
       <form onSubmit={form.onSubmit(handleSubmit)}>
-        <Stack align="stretch" justify="center">
+        <Stack align="stretch" justify="center" mt={20}>
           <TextInput
             name="integration_token"
             label="Integration Token"
@@ -68,7 +75,7 @@ export const NotionForm: FC = () => {
               !form.values.integration_token || !form.values.database_id
             }
           >
-            Register
+            {mode === 'register' ? 'Register' : 'Update'}
           </Button>
           <Flex
             gap={5}
