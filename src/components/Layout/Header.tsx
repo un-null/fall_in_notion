@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { Button, createStyles, Flex, Text } from '@mantine/core'
-import { signOut, useSession } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -29,9 +29,13 @@ export const Header: FC = () => {
           </Text>
         </div>
 
-        {session && (
+        {session ? (
           <Button mt={20} onClick={() => signOut()}>
             SignOut
+          </Button>
+        ) : (
+          <Button mt={20} onClick={() => signIn()}>
+            SignIn
           </Button>
         )}
       </Flex>

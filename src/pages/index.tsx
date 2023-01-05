@@ -1,5 +1,5 @@
-import { Button, Center, Stack, Text } from '@mantine/core'
-import { signIn, useSession } from 'next-auth/react'
+import { Center, Stack, Text } from '@mantine/core'
+import { useSession } from 'next-auth/react'
 
 import { DashBoard } from '../components'
 import { Layout } from '../components/Layout'
@@ -13,7 +13,6 @@ const Home = () => {
         {!session?.user ? (
           <Stack align="center">
             <Text>U need SignIn</Text>
-            <Button onClick={() => signIn()}>SignIn</Button>
           </Stack>
         ) : (
           <DashBoard />

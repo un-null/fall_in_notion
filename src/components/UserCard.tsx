@@ -41,7 +41,7 @@ export const UserCard: FC<Partial<Props>> = ({ name, email, image }) => {
             color="#1DA1F2"
             variant="filled"
             component="a"
-            href=""
+            href="#"
           >
             <IconBrandTwitter />
           </ActionIcon>

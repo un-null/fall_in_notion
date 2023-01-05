@@ -1,5 +1,7 @@
 import { ComponentProps, FC, useContext } from 'react'
 
+import { useRouter } from 'next/router'
+
 import {
   Button,
   Center,
@@ -14,11 +16,12 @@ import {
 import { useMutateTweets } from '../libs/twitter'
 import { FormContext, FormDispatchContext } from '../pages/sendTweets'
 
-// Fix rename ↓
 export const SendTweetsForm: FC = () => {
   const { sendTweetsMutation } = useMutateTweets()
   const { count, limit } = useContext(FormContext)
   const { setCount, setLimit } = useContext(FormDispatchContext)
+
+  const router = useRouter()
 
   const handleSubmit: ComponentProps<'form'>['onSubmit'] = async (e) => {
     e.preventDefault()
@@ -76,11 +79,9 @@ export const SendTweetsForm: FC = () => {
         </Stack>
       )}
 
-      {/* {(sendTweetsMutation.isSuccess || count === 2) && <RemoveTweetsForm />} */}
-
       {count === 2 && (
         <Center>
-          <Button>Go Home</Button>
+          <Button onClick={() => router.push('/')}>Go Home</Button>
         </Center>
       )}
     </div>

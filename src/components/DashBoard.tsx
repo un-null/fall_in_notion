@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Grid, Stack } from '@mantine/core'
+import { Center, Grid, Stack } from '@mantine/core'
 import { useSession } from 'next-auth/react'
 
 import { useQueryDatabaseInfo } from '../libs/notion'
@@ -13,19 +13,15 @@ export const DashBoard: FC = () => {
   const { data: session } = useSession()
   const { data: databaseInfoCache } = useQueryDatabaseInfo()
 
-  // Fix Rename ? ↓
-  const actionArr = [
-    { name: 'Send ♡ To Notion' },
-    { name: 'Remove ♡ On Twitter' },
-  ]
+  const actionArr = [{ name: 'send' }, { name: 'delete' }]
 
   return (
     <div>
       {!databaseInfoCache?.integration_token ||
       !databaseInfoCache?.database_id ? (
-        <Stack mt={40}>
+        <Center mt={40}>
           <NotionForm />
-        </Stack>
+        </Center>
       ) : (
         <Stack align="center">
           <UserCard
@@ -38,16 +34,11 @@ export const DashBoard: FC = () => {
 
           <Grid gutter={10}>
             {actionArr.map((action, index) => (
-              <Grid.Col
-                key={index}
-                span={6}
-                sx={{ ':hover': { cursor: 'pointer' } }}
-              >
+              <Grid.Col key={index} span={6}>
                 <ActionCard name={action.name} />
               </Grid.Col>
             ))}
           </Grid>
-          {/* <RetrieveTweetsForm /> */}
         </Stack>
       )}
     </div>

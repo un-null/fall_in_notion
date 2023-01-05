@@ -1,4 +1,4 @@
 export type NotionDatabase = {
-  integration_token: string | undefined
-  database_id: string | undefined
+  integration_token?: string
+  database_id?: string
 }

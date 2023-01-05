@@ -15,9 +15,13 @@ export const StorageCard: FC = () => {
         <Grid.Col span={9}>
           <Stack spacing={4}>
             <Title order={4}>Available Liked Tweets</Title>
-            {/* Fix Text UI ↓ */}
+            {/* Fix Text UI ? ↓ */}
             <Text size="sm" color="dimmed" weight="bold">
-              {`0`} of {`75`} /
+              {`0`}
+              <Text span size="xs" color="dimmed" weight="bold" mx={4}>
+                of
+              </Text>
+              75 /
               <Text span ml={4} size="xs">
                 15 min
               </Text>
