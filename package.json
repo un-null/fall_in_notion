@@ -18,7 +18,6 @@
     "@mantine/hooks": "^5.9.5",
     "@mantine/next": "^5.9.5",
     "@mantine/notifications": "^5.10.0",
-    "@next-auth/react-query": "^0.0.12",
     "@next-auth/supabase-adapter": "^0.2.0",
     "@next/font": "13.0.7",
     "@notionhq/client": "^2.2.3",
