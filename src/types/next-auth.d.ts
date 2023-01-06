@@ -13,6 +13,9 @@ declare module 'next-auth' {
       account_id?: string
       oauth_token?: string
       oauth_token_secret?: string
+      user_id?: string
+      integration_token?: string
+      database_id?: string
       address: string
     } & DefaultSession['user']
   }
