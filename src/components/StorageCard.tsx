@@ -3,7 +3,11 @@ import { FC } from 'react'
 import { Card, Center, Grid, Progress, Stack, Text, Title } from '@mantine/core'
 import { IconHeart } from '@tabler/icons'
 
-export const StorageCard: FC = () => {
+type Props = {
+  limit: number
+}
+
+export const StorageCard: FC<Props> = ({ limit }) => {
   return (
     <Card shadow="md" w={610}>
       <Grid justify="space-between" align="center">
@@ -17,7 +21,7 @@ export const StorageCard: FC = () => {
             <Title order={4}>Available Liked Tweets</Title>
             {/* Fix Text UI ? ↓ */}
             <Text size="sm" color="dimmed" weight="bold">
-              {`0`}
+              {limit}
               <Text span size="xs" color="dimmed" weight="bold" mx={4}>
                 of
               </Text>
@@ -26,7 +30,7 @@ export const StorageCard: FC = () => {
                 15 min
               </Text>
             </Text>
-            <Progress color="#f91980" value={40} />
+            <Progress color="#f91980" value={limit} />
           </Stack>
         </Grid.Col>
       </Grid>

@@ -17,6 +17,7 @@ import {
   IconBrandTwitter,
   IconChevronRight,
 } from '@tabler/icons'
+import { useSession } from 'next-auth/react'
 
 import { NotionForm } from './NotionForm'
 
@@ -37,21 +38,37 @@ const useStyles = createStyles(() => ({
 export const UserCard: FC<Partial<Props>> = ({ name, email, image }) => {
   const { classes } = useStyles()
   const [opened, setOpened] = useState(false)
+  const { data: session } = useSession()
 
   return (
     <>
       <Card shadow="sm" w={610}>
         <Flex justify="space-between" align="strech">
           <Stack justify="space-between">
-            <ActionIcon
-              size="xl"
-              color="#1DA1F2"
-              variant="filled"
-              component="a"
-              href="#"
-            >
-              <IconBrandTwitter />
-            </ActionIcon>
+            {/* Fix color, Action Icon ↓ */}
+            <Group spacing="xs">
+              <ActionIcon
+                size="xl"
+                color="#1DA1F2"
+                variant="filled"
+                component="a"
+                href="#"
+              >
+                <IconBrandTwitter />
+              </ActionIcon>
+              <ActionIcon
+                size="xl"
+                color="dark"
+                variant="outline"
+                component="a"
+                target="_blank"
+                rel="noopener noreferrer"
+                href={`https://www.notion.so/${session?.user.database_id}`}
+              >
+                <IconBrandNotion size={28} />
+              </ActionIcon>
+            </Group>
+
             <Text size="xl" weight="bold" color="dark">
               {name}
             </Text>
@@ -59,7 +76,7 @@ export const UserCard: FC<Partial<Props>> = ({ name, email, image }) => {
           <Avatar src={image} w={125} h={125} />
         </Flex>
 
-        <Text size="sm" color="dimmed" pb={4}>
+        <Text size="sm" color="dimmed" pb={8}>
           {email}
         </Text>
 

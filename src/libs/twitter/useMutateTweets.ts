@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
+import { LocalObj } from '../../types'
+
 export const useMutateTweets = () => {
   const queryClient = useQueryClient()
 
@@ -12,9 +14,33 @@ export const useMutateTweets = () => {
         },
         body: JSON.stringify(limit),
       })
+      return limit
     },
     {
-      onSuccess: () => {
+      onSuccess: (data) => {
+        if (data) {
+          const prevLocal = localStorage.getItem('limit')
+          console.log(data)
+
+          // Fix ... ↓
+          if (prevLocal) {
+            const localObj: LocalObj = JSON.parse(prevLocal)
+            const newItem = { ...localObj }
+            newItem.value = String(data)
+            console.log(newItem)
+
+            localStorage.setItem('limit', JSON.stringify(newItem))
+          } else {
+            localStorage.setItem(
+              'limit',
+              JSON.stringify({
+                value: String(data),
+                expiry: new Date().getTime() + 60 * 15 * 1000,
+              })
+            )
+          }
+        }
+
         alert('Sending completed!')
       },
       onError: (error: Error) => {
@@ -22,7 +48,6 @@ export const useMutateTweets = () => {
       },
     }
   )
-
   const removeTweetsMutation = useMutation(
     async (limit: number | undefined) => {
       await fetch('api/twitter/removeLikedTweets', {
