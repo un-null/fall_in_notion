@@ -4,7 +4,7 @@ export type NotionDatabase = {
 }
 
 // Fix ↓
-export type LocalObj = {
-  value: string
-  expiry: string
+export type LocalItem = {
+  value: number
+  expiry: number
 }

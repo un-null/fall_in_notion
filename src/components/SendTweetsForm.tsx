@@ -12,37 +12,20 @@ import {
   Stack,
   Text,
 } from '@mantine/core'
-import { useQuery } from '@tanstack/react-query'
 
-import { useMutateTweets } from '../libs/twitter'
+import { useMutateTweets, useQueryLimit } from '../libs/twitter'
 import { FormContext, FormDispatchContext } from '../pages/sendTweets'
-import { LocalObj } from '../types'
 
 export const SendTweetsForm: FC = () => {
-  const { sendTweetsMutation } = useMutateTweets()
+  const router = useRouter()
+
   const { count, limit } = useContext(FormContext)
   const { setCount, setLimit } = useContext(FormDispatchContext)
 
-  const { data: limitCache } = useQuery({
-    queryKey: ['limit'],
-    queryFn: () => {
-      const item = localStorage.getItem('limit')
+  const { data: limitCache } = useQueryLimit()
+  const { sendTweetsMutation } = useMutateTweets()
 
-      if (!item) return 0
-
-      const limitObj: LocalObj = JSON.parse(item)
-
-      if (new Date().getTime() > Number(limitObj.expiry)) {
-        localStorage.removeItem('limit')
-        return 0
-      }
-
-      return Number(limitObj.value)
-    },
-  })
-
-  const router = useRouter()
-
+  const max = limitCache ? 75 - limitCache : 75
   const handleSubmit: ComponentProps<'form'>['onSubmit'] = async (e) => {
     e.preventDefault()
 
@@ -56,8 +39,6 @@ export const SendTweetsForm: FC = () => {
       setCount(2)
     }
   }
-
-  const max = limitCache ? 75 - limitCache : 75
 
   return (
     <div>

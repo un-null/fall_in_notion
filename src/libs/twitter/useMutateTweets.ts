@@ -1,10 +1,8 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 
-import { LocalObj } from '../../types'
+import { LocalItem } from '../../types'
 
 export const useMutateTweets = () => {
-  const queryClient = useQueryClient()
-
   const sendTweetsMutation = useMutation(
     async (limit: number | undefined) => {
       await fetch('/api/twitter/getLikedTweets', {
@@ -20,16 +18,13 @@ export const useMutateTweets = () => {
       onSuccess: (data) => {
         if (data) {
           const prevLocal = localStorage.getItem('limit')
-          console.log(data)
 
-          // Fix ... ↓
           if (prevLocal) {
-            const localObj: LocalObj = JSON.parse(prevLocal)
-            const newItem = { ...localObj }
-            newItem.value = String(data)
-            console.log(newItem)
+            const localItem: LocalItem = JSON.parse(prevLocal)
+            const cloneItem = { ...localItem }
+            cloneItem.value = data
 
-            localStorage.setItem('limit', JSON.stringify(newItem))
+            localStorage.setItem('limit', JSON.stringify(cloneItem))
           } else {
             localStorage.setItem(
               'limit',
@@ -55,13 +50,11 @@ export const useMutateTweets = () => {
         headers: {
           'Content-Type': 'application.json',
         },
-        // Fix rename ↓
         body: JSON.stringify(limit),
       })
     },
     {
       onSuccess: () => {
-        // Fix ↓
         alert('Removeing completed')
       },
       onError: (error: Error) => {

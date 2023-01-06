@@ -1,11 +1,10 @@
 import { FC } from 'react'
 
 import { Center, Grid, Stack } from '@mantine/core'
-import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 
 import { useQueryDatabaseInfo } from '../libs/notion'
-import { LocalObj } from '../types'
+import { useQueryLimit } from '../libs/twitter'
 import { ActionCard } from './ActionCard'
 import { NotionForm } from './NotionForm'
 import { StorageCard } from './StorageCard'
@@ -14,23 +13,7 @@ import { UserCard } from './UserCard'
 export const DashBoard: FC = () => {
   const { data: session } = useSession()
   const { data: databaseInfoCache } = useQueryDatabaseInfo()
-  const { data: limitCache } = useQuery({
-    queryKey: ['limit'],
-    queryFn: () => {
-      const item = localStorage.getItem('limit')
-
-      if (!item) return 0
-
-      const limitObj: LocalObj = JSON.parse(item)
-
-      if (new Date().getTime() > Number(limitObj.expiry)) {
-        localStorage.removeItem('limit')
-        return 0
-      }
-
-      return Number(limitObj.value)
-    },
-  })
+  const { data: limitCache } = useQueryLimit()
 
   const actionArr = [{ name: 'send' }, { name: 'delete' }]
 
