@@ -30,7 +30,7 @@ export const StorageCard: FC<Props> = ({ limit }) => {
                 15 min
               </Text>
             </Text>
-            <Progress color="#f91980" value={limit} />
+            <Progress color="pink" value={limit} />
           </Stack>
         </Grid.Col>
       </Grid>

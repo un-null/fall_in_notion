@@ -12,6 +12,7 @@ const useStyles = createStyles((theme) => {
 
   return {
     wrapper: {
+      minHeight: '400px',
       display: 'flex',
       backgroundColor:
         theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
@@ -69,7 +70,7 @@ const useStyles = createStyles((theme) => {
     contacts: {
       boxSizing: 'border-box',
       borderRadius: theme.radius.lg - 2,
-      backgroundColor: '#1DA1F2',
+      backgroundColor: theme.colors.cyan[6],
       backgroundPosition: 'center',
       border: '1px solid transparent',
       padding: theme.spacing.xl,
@@ -98,7 +99,6 @@ const useStyles = createStyles((theme) => {
   }
 })
 
-// Fix type ↓
 export const FormContext = createContext<{
   limit: number | undefined
   count: number
@@ -146,7 +146,7 @@ const SendTweets: NextPage = () => {
                   active={count}
                   bulletSize={24}
                   lineWidth={2}
-                  color={'pink'}
+                  color="pink"
                 >
                   <Timeline.Item
                     bullet={<IconHeart size={12} />}
@@ -198,7 +198,6 @@ const SendTweets: NextPage = () => {
 
               <div className={classes.form}>
                 <Text size="lg" weight={700} className={classes.title}>
-                  {/* Fix ↓ */}
                   {count ? count + 1 : 1} / 3
                 </Text>
 

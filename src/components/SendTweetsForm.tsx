@@ -12,6 +12,7 @@ import {
   Stack,
   Text,
 } from '@mantine/core'
+import { IconChevronsRight } from '@tabler/icons'
 
 import { useMutateTweets, useQueryLimit } from '../libs/twitter'
 import { FormContext, FormDispatchContext } from '../pages/sendTweets'
@@ -47,7 +48,7 @@ export const SendTweetsForm: FC = () => {
           <>
             <Slider
               defaultValue={5}
-              value={limitCache}
+              value={limit}
               onChange={setLimit}
               min={1}
               max={max}
@@ -64,6 +65,7 @@ export const SendTweetsForm: FC = () => {
                       { value: max, label: `${max}` },
                     ]
               }
+              color="pink"
               mb={40}
             />
 
@@ -75,7 +77,9 @@ export const SendTweetsForm: FC = () => {
                 min={1}
                 max={max}
               />
-              <Button type="submit">Next</Button>
+              <Button type="submit" rightIcon={<IconChevronsRight size={20} />}>
+                Next
+              </Button>
             </Flex>
           </>
         )}

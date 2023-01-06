@@ -45,11 +45,11 @@ export const UserCard: FC<Partial<Props>> = ({ name, email, image }) => {
       <Card shadow="sm" w={610}>
         <Flex justify="space-between" align="strech">
           <Stack justify="space-between">
-            {/* Fix color, Action Icon ↓ */}
+            {/* Fix Action Icon ? ↓ */}
             <Group spacing="xs">
               <ActionIcon
                 size="xl"
-                color="#1DA1F2"
+                color="cyan"
                 variant="filled"
                 component="a"
                 href="#"
