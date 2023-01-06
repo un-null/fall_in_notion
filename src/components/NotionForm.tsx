@@ -2,7 +2,8 @@ import { FC, FormEvent } from 'react'
 
 import { Anchor, Button, Flex, Stack, Text, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
-import { IconQuestionCircle } from '@tabler/icons'
+import { showNotification } from '@mantine/notifications'
+import { IconEdit, IconQuestionCircle } from '@tabler/icons'
 import { useSession } from 'next-auth/react'
 
 import { useMutateDatabaseInfo } from '../libs/notion'
@@ -36,10 +37,39 @@ export const NotionForm: FC<Props> = ({ mode }) => {
 
   const handleSubmit = (values: FormValue, e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    updateDatabaseInfo.mutate({
-      integration_token: values.integration_token,
-      database_id: values.database_id,
-    })
+
+    try {
+      updateDatabaseInfo.mutate({
+        integration_token: values.integration_token,
+        database_id: values.database_id,
+      })
+
+      showNotification({
+        title: 'Success',
+        message: 'Update your Database Infomation',
+        color: 'green',
+        icon: <IconEdit />,
+
+        // Fix responsive
+        styles: (theme) => ({
+          root: {
+            backgroundColor: theme.colors.green[7],
+          },
+        }),
+      })
+    } catch (error: any) {
+      showNotification({
+        title: 'Error',
+        message: 'Try again!',
+        color: 'red',
+
+        styles: (theme) => ({
+          root: {
+            backgroundColor: theme.colors.green[7],
+          },
+        }),
+      })
+    }
   }
 
   return (

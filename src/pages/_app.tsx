@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app'
 
 import { MantineProvider } from '@mantine/core'
+import { NotificationsProvider } from '@mantine/notifications'
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
 import { QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -37,7 +38,9 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
         }}
       >
         <MantineProvider withGlobalStyles withNormalizeCSS>
-          <Component {...pageProps} />
+          <NotificationsProvider>
+            <Component {...pageProps} />
+          </NotificationsProvider>
         </MantineProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </PersistQueryClientProvider>
