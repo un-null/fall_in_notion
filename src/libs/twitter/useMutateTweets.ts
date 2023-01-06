@@ -22,14 +22,14 @@ export const useMutateTweets = () => {
           if (prevLocal) {
             const localItem: LocalItem = JSON.parse(prevLocal)
             const cloneItem = { ...localItem }
-            cloneItem.value = data
+            cloneItem.value = localItem.value + data
 
             localStorage.setItem('limit', JSON.stringify(cloneItem))
           } else {
             localStorage.setItem(
               'limit',
               JSON.stringify({
-                value: String(data),
+                value: data,
                 expiry: new Date().getTime() + 60 * 15 * 1000,
               })
             )

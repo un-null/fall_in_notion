@@ -7,6 +7,6 @@ declare namespace NodeJS {
     readonly NEXT_PUBLIC_SUPABASE_ANON_KEY: string
     readonly SUPABASE_SERVICE_ROLE_KEY: string
     readonly SUPABASE_JWT_SECRET: string
-    readonly NEXTAUTH_SECRET: string
+    readonly NEXT_PUBLIC_SECRET: string
   }
 }
