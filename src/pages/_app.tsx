@@ -29,7 +29,7 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
                 '#E7C6C6',
                 '#E1A4A4',
                 '#E28080',
-                // 4
+                // 3
                 '#EB5757',
                 '#D64C4C',
                 '#C14444',
