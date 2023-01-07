@@ -1,13 +1,17 @@
 import { FC } from 'react'
 
-import { Button, createStyles, Flex, Text } from '@mantine/core'
+import { Button, Center, createStyles, Flex } from '@mantine/core'
 import { signIn, signOut, useSession } from 'next-auth/react'
 
 const useStyles = createStyles((theme) => ({
   header: {
-    padding: '0 16px 16px 16px',
+    width: '100%',
+    height: '56px',
     margin: '0 auto',
     borderBottom: `2px solid ${theme.colors.gray[3]}`,
+    backgroundColor: 'white',
+    display: 'grid',
+    placeItems: 'center',
   },
 }))
 
@@ -18,25 +22,24 @@ export const Header: FC = () => {
   return (
     <header className={classes.header}>
       <Flex
-        justify={!session ? 'center' : 'space-between'}
+        justify="space-between"
         align="center"
+        w="100%"
         maw={1200}
         mx="auto"
       >
-        <div>
-          <Text size="xl" weight="bold" align="center">
-            Logo
-          </Text>
-        </div>
+        <>Logo</>
 
         {session ? (
-          <Button mt={20} onClick={() => signOut()}>
+          <Button color="cyan" onClick={() => signOut()}>
             SignOut
           </Button>
         ) : (
-          <Button mt={20} onClick={() => signIn()}>
-            SignIn
-          </Button>
+          <Center>
+            <Button color="red.4" onClick={() => signIn()}>
+              SignIn
+            </Button>
+          </Center>
         )}
       </Flex>
     </header>

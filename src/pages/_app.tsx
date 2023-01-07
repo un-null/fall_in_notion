@@ -103,13 +103,6 @@ const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
                   },
                 }),
               },
-              Button: {
-                styles: (theme) => ({
-                  root: {
-                    backgroundColor: theme.colors.cyan[6],
-                  },
-                }),
-              },
             },
           }}
         >
