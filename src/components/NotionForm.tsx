@@ -87,14 +87,12 @@ export const NotionForm: FC<Props> = ({ mode }) => {
             label="Integration Token"
             placeholder="secret_"
             withAsterisk
-            defaultValue={session?.user.integration_token}
             {...form.getInputProps('integration_token')}
           />
           <TextInput
             name="database_id"
             label="Database ID"
             withAsterisk
-            defaultValue={session?.user.database_id}
             {...form.getInputProps('database_id')}
           />
 
