@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import { NextAuthOptions } from 'next-auth'
 import NextAuth from 'next-auth/next'
 import TwitterProvider from 'next-auth/providers/twitter'
+import { TwitterApi } from 'twitter-api-v2'
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXT_PUBLIC_SECRET,
@@ -75,6 +76,19 @@ export const authOptions: NextAuthOptions = {
         session.user.integration_token = data.integration_token
         session.user.database_id = data.database_id
       }
+
+      const twitter = new TwitterApi({
+        appKey: process.env.TWITTER_CONSUMER_KEY,
+        appSecret: process.env.TWITTER_CONSUMER_SECRET,
+        accessToken: session.user.oauth_token || '',
+        accessSecret: session.user.oauth_token_secret || '',
+      })
+      const user = await twitter.v1.user({
+        user_id: session.user.account_id ? session.user.account_id : '',
+      })
+
+      session.user.name = user.screen_name
+
       return session
     },
   },

@@ -52,7 +52,9 @@ export const UserCard: FC<Partial<Props>> = ({ name, email, image }) => {
                 color="cyan"
                 variant="filled"
                 component="a"
-                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                href={`https://twitter.com/${name}`}
               >
                 <IconBrandTwitter />
               </ActionIcon>
@@ -70,7 +72,7 @@ export const UserCard: FC<Partial<Props>> = ({ name, email, image }) => {
             </Group>
 
             <Text size="xl" weight="bold" color="dark">
-              {name}
+              @{name}
             </Text>
           </Stack>
           <Avatar src={image} w={125} h={125} />
