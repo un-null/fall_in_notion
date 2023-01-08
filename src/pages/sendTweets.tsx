@@ -25,6 +25,7 @@ const useStyles = createStyles((theme) => {
       }`,
 
       [BREAKPOINT]: {
+        minHeight: '0px',
         flexDirection: 'column',
       },
     },
@@ -67,7 +68,7 @@ const useStyles = createStyles((theme) => {
       },
     },
 
-    contacts: {
+    flow: {
       boxSizing: 'border-box',
       borderRadius: theme.radius.lg - 2,
       backgroundColor: theme.colors.cyan[6],
@@ -77,6 +78,7 @@ const useStyles = createStyles((theme) => {
       flex: '0 0 400px',
 
       [BREAKPOINT]: {
+        maxHeight: 250,
         marginBottom: theme.spacing.sm,
         paddingLeft: theme.spacing.md,
       },
@@ -131,7 +133,7 @@ const SendTweets: NextPage = () => {
         <Layout label="Send Liked Tweets to Notion">
           <Paper shadow="md" radius="lg" mt={40}>
             <div className={classes.wrapper}>
-              <div className={classes.contacts}>
+              <div className={classes.flow}>
                 <Text
                   size="lg"
                   weight={700}

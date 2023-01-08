@@ -1,8 +1,10 @@
 import { FC } from 'react'
 
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import { Button, Center, createStyles, Flex } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import { signIn, signOut, useSession } from 'next-auth/react'
 
 const useStyles = createStyles((theme) => ({
@@ -22,6 +24,11 @@ export const Header: FC = () => {
   const { data: session } = useSession()
   const { classes } = useStyles()
 
+  const router = useRouter()
+  const isHome = router.asPath === '/'
+
+  const media = useMediaQuery('(max-width: 430px)')
+
   return (
     <header className={classes.header}>
       <Flex
@@ -34,12 +41,21 @@ export const Header: FC = () => {
         <Link href="/">Logo</Link>
 
         {session ? (
-          <Button color="cyan" onClick={() => signOut()}>
+          <Button
+            size={media ? 'xs' : 'sm'}
+            color="cyan"
+            disabled={!isHome}
+            onClick={() => signOut()}
+          >
             SignOut
           </Button>
         ) : (
           <Center>
-            <Button color="red.4" onClick={() => signIn()}>
+            <Button
+              size={media ? 'xs' : 'sm'}
+              color="red.4"
+              onClick={() => signIn()}
+            >
               SignIn
             </Button>
           </Center>

@@ -12,6 +12,7 @@ import {
   Stack,
   Text,
 } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import {
   IconBrandNotion,
   IconBrandTwitter,
@@ -40,78 +41,78 @@ export const UserCard: FC<Partial<Props>> = ({ name, email, image }) => {
   const [opened, setOpened] = useState(false)
   const { data: session } = useSession()
 
-  return (
-    <>
-      <Card shadow="sm" w={610}>
-        <Flex justify="space-between" align="strech">
-          <Stack justify="space-between">
-            {/* Fix Action Icon ? ↓ */}
-            <Group spacing="xs">
-              <ActionIcon
-                size="xl"
-                color="cyan"
-                variant="filled"
-                component="a"
-                target="_blank"
-                rel="noopener noreferrer"
-                href={`https://twitter.com/${name}`}
-              >
-                <IconBrandTwitter />
-              </ActionIcon>
-              <ActionIcon
-                size="xl"
-                color="dark"
-                variant="outline"
-                component="a"
-                target="_blank"
-                rel="noopener noreferrer"
-                href={`https://www.notion.so/${session?.user.database_id}`}
-              >
-                <IconBrandNotion size={28} />
-              </ActionIcon>
-            </Group>
+  const media = useMediaQuery('(max-width: 430px)')
 
-            <Text size="xl" weight="bold" color="dark">
-              @{name}
+  return (
+    <Card shadow="sm" maw={610} w="100%">
+      <Flex justify="space-between" align="strech">
+        <Stack justify="space-between">
+          {/* Fix Action Icon ? ↓ */}
+          <Group spacing="xs">
+            <ActionIcon
+              size={media ? 'lg' : 'xl'}
+              color="cyan"
+              variant="filled"
+              component="a"
+              target="_blank"
+              rel="noopener noreferrer"
+              href={`https://twitter.com/${name}`}
+            >
+              <IconBrandTwitter size={media ? 20 : 24} />
+            </ActionIcon>
+            <ActionIcon
+              size={media ? 'lg' : 'xl'}
+              color="dark"
+              variant="outline"
+              component="a"
+              target="_blank"
+              rel="noopener noreferrer"
+              href={`https://www.notion.so/${session?.user.database_id}`}
+            >
+              <IconBrandNotion size={media ? 24 : 28} />
+            </ActionIcon>
+          </Group>
+
+          <Text size={media ? 'lg' : 'xl'} weight="bold" color="dark">
+            @{name}
+          </Text>
+        </Stack>
+        <Avatar src={image} w={media ? 100 : 125} h={media ? 100 : 125} />
+      </Flex>
+
+      <Text size={media ? 'xs' : 'sm'} color="dimmed" pb={8}>
+        {email}
+      </Text>
+
+      <Card.Section bg="gray.1" py={8}>
+        <Flex pl={12} pr={16} justify="space-between">
+          <Group spacing={0}>
+            <IconBrandNotion color="#2C2E33" />
+            <Text size="xs" weight="bold" color="dark.5">
+              DataTable
             </Text>
-          </Stack>
-          <Avatar src={image} w={125} h={125} />
+          </Group>
+          <Group
+            spacing="xs"
+            sx={{ cursor: 'pointer', ':hover': { color: '#1DA1F2' } }}
+          >
+            <Text
+              size={media ? 'xs' : 'sm'}
+              weight="bold"
+              onClick={() => setOpened((o) => !o)}
+            >
+              {opened ? 'Close' : 'Confirm'}
+            </Text>
+            <IconChevronRight size={16} className={classes.icon} />
+          </Group>
         </Flex>
 
-        <Text size="sm" color="dimmed" pb={8}>
-          {email}
-        </Text>
-
-        <Card.Section bg="gray.1" py={8}>
-          <Flex pl={12} pr={16} justify="space-between">
-            <Group spacing={0}>
-              <IconBrandNotion color="#2C2E33" />
-              <Text size="xs" weight="bold" color="dark.5">
-                DataTable
-              </Text>
-            </Group>
-            <Group
-              spacing="xs"
-              sx={{ cursor: 'pointer', ':hover': { color: '#1DA1F2' } }}
-            >
-              <Text
-                size="sm"
-                weight="bold"
-                onClick={() => setOpened((o) => !o)}
-              >
-                {opened ? 'Close' : 'Confirm'}
-              </Text>
-              <IconChevronRight size={16} className={classes.icon} />
-            </Group>
-          </Flex>
-
-          <Collapse in={opened}>
-            <Center my={20}>
-              <NotionForm mode="edit" />
-            </Center>
-          </Collapse>
-        </Card.Section>
-      </Card>
-    </>
+        <Collapse in={opened}>
+          <Center my={20}>
+            <NotionForm mode="edit" />
+          </Center>
+        </Collapse>
+      </Card.Section>
+    </Card>
   )
 }

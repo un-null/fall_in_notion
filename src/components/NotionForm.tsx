@@ -99,6 +99,7 @@ export const NotionForm: FC<Props> = ({ mode }) => {
           <Button
             type="submit"
             mt={20}
+            color="cyan"
             disabled={
               !form.values.integration_token || !form.values.database_id
             }

@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import { Card, Center, Grid, Progress, Stack, Text, Title } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import { IconHeart } from '@tabler/icons'
 
 type Props = {
@@ -8,8 +9,10 @@ type Props = {
 }
 
 export const StorageCard: FC<Props> = ({ limit }) => {
+  const media = useMediaQuery('(max-width: 430px)')
+
   return (
-    <Card shadow="md" w={610}>
+    <Card shadow="md" maw={610} w="100%">
       <Grid justify="space-between" align="center">
         <Grid.Col span={3}>
           <Center>
@@ -18,7 +21,7 @@ export const StorageCard: FC<Props> = ({ limit }) => {
         </Grid.Col>
         <Grid.Col span={9}>
           <Stack spacing={4}>
-            <Title order={4}>Available Liked Tweets</Title>
+            <Title order={media ? 5 : 4}>Available Liked Tweets</Title>
             {/* Fix Text UI ? ↓ */}
             <Text size="sm" color="dimmed" weight="bold">
               {limit}

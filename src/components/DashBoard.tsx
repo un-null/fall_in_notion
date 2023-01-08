@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Center, Grid, Stack } from '@mantine/core'
+import { Center, Container, SimpleGrid, Stack } from '@mantine/core'
 import { useSession } from 'next-auth/react'
 
 import { useQueryDatabaseInfo } from '../libs/notion'
@@ -18,7 +18,7 @@ export const DashBoard: FC = () => {
   const actionArr = [{ name: 'send' }, { name: 'delete' }]
 
   return (
-    <div>
+    <Container w="100%">
       {!databaseInfoCache?.integration_token ||
       !databaseInfoCache?.database_id ? (
         <Center mt={40}>
@@ -34,15 +34,17 @@ export const DashBoard: FC = () => {
 
           <StorageCard limit={limitCache ? limitCache : 0} />
 
-          <Grid gutter={10}>
+          <SimpleGrid
+            cols={2}
+            breakpoints={[{ maxWidth: 430, cols: 1 }]}
+            w="100%"
+          >
             {actionArr.map((action, index) => (
-              <Grid.Col key={index} span={6}>
-                <ActionCard name={action.name} />
-              </Grid.Col>
+              <ActionCard key={index} name={action.name} />
             ))}
-          </Grid>
+          </SimpleGrid>
         </Stack>
       )}
-    </div>
+    </Container>
   )
 }

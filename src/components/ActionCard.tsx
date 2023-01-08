@@ -18,7 +18,8 @@ export const ActionCard: FC<Props> = ({ name }) => {
   return (
     // Fix color and actionIcon?
     <Card
-      w={300}
+      miw="100%"
+      maw={300}
       shadow="md"
       component="a"
       href={name === 'delete' ? undefined : '/sendTweets'}
