@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import { ActionIcon, Card, Center, Flex, Text } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import {
   IconBrandNotion,
   IconChevronsRight,
@@ -14,12 +15,11 @@ type Props = Action
 
 export const ActionCard: FC<Props> = ({ name, isLimit }) => {
   const color = name === 'delete' ? '#868e96' : '#1DA1F2'
-
-  console.log(isLimit)
+  const media = useMediaQuery('(max-width: 430px)')
 
   return (
     <Card
-      miw="100%"
+      miw={media ? '100%' : undefined}
       maw={300}
       shadow="md"
       component="a"

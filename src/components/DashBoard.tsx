@@ -16,8 +16,7 @@ export const DashBoard: FC = () => {
   const { data: databaseInfoCache } = useQueryDatabaseInfo()
   const { data: limitCache } = useQueryLimit()
 
-  const isLimit = limitCache === 3
-
+  const isLimit = limitCache === 75
   const actionArr: Action[] = [{ name: 'send', isLimit }, { name: 'delete' }]
 
   return (
@@ -40,10 +39,11 @@ export const DashBoard: FC = () => {
           <SimpleGrid
             cols={2}
             breakpoints={[{ maxWidth: 430, cols: 1 }]}
+            maw={610}
             w="100%"
           >
             {actionArr.map((action, index) => (
-              <ActionCard key={index} name={action.name} isLimit />
+              <ActionCard key={index} name={action.name} isLimit={isLimit} />
             ))}
           </SimpleGrid>
         </Stack>
