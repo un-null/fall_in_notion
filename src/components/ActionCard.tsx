@@ -8,33 +8,32 @@ import {
   IconHeartBroken,
 } from '@tabler/icons'
 
-type Props = {
-  name: string
-}
+import { Action } from '../types'
 
-export const ActionCard: FC<Props> = ({ name }) => {
+type Props = Action
+
+export const ActionCard: FC<Props> = ({ name, isLimit }) => {
   const color = name === 'delete' ? '#868e96' : '#1DA1F2'
 
+  console.log(isLimit)
+
   return (
-    // Fix color and actionIcon?
     <Card
       miw="100%"
       maw={300}
       shadow="md"
       component="a"
-      href={name === 'delete' ? undefined : '/sendTweets'}
+      href={name === 'send' ? (isLimit ? undefined : 'sendTweets') : undefined}
       sx={{ ':hover': { color: color, cursor: 'pointer' } }}
     >
-      {name === 'delete' ? (
-        <Center my={20}>
-          <ActionIcon sx={{ ':hover': { backgroundColor: 'white' } }}>
-            <IconHeartBroken color="#868e96" size={28} />
-          </ActionIcon>
-        </Center>
-      ) : (
+      {name === 'send' ? (
         <Flex justify="center" align="center" gap="xs" my={20}>
           <ActionIcon sx={{ ':hover': { backgroundColor: 'white' } }}>
-            <IconHeart color="#f91980" style={{ fill: '#f91980' }} size={28} />
+            <IconHeart
+              color={isLimit ? '#868e96' : '#f91980'}
+              style={{ fill: isLimit ? '#868e96' : '#f91980' }}
+              size={28}
+            />
           </ActionIcon>
           <ActionIcon
             variant="filled"
@@ -46,15 +45,21 @@ export const ActionCard: FC<Props> = ({ name }) => {
             <IconChevronsRight size={16} />
           </ActionIcon>
           <ActionIcon sx={{ ':hover': { backgroundColor: 'white' } }}>
-            <IconBrandNotion size={28} color="black" />
+            <IconBrandNotion size={28} color={isLimit ? '#868e96' : 'black'} />
           </ActionIcon>
         </Flex>
+      ) : (
+        <Center my={20}>
+          <ActionIcon sx={{ ':hover': { backgroundColor: 'white' } }}>
+            <IconHeartBroken color="#868e96" size={28} />
+          </ActionIcon>
+        </Center>
       )}
       <Text
         size="md"
         weight="bold"
         align="center"
-        color={name === 'delete' ? '#868e96' : undefined}
+        color={name === 'send' ? (isLimit ? '#868e96' : undefined) : '#868e96'}
         td={color === '#868e96' ? 'line-through' : undefined}
       >
         {name === 'delete' ? 'Comming soon ...' : 'Send ♡ To Notion'}

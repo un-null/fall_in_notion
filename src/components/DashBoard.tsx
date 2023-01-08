@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react'
 
 import { useQueryDatabaseInfo } from '../libs/notion'
 import { useQueryLimit } from '../libs/twitter'
+import { Action } from '../types'
 import { ActionCard } from './ActionCard'
 import { NotionForm } from './NotionForm'
 import { StorageCard } from './StorageCard'
@@ -15,7 +16,9 @@ export const DashBoard: FC = () => {
   const { data: databaseInfoCache } = useQueryDatabaseInfo()
   const { data: limitCache } = useQueryLimit()
 
-  const actionArr = [{ name: 'send' }, { name: 'delete' }]
+  const isLimit = limitCache === 3
+
+  const actionArr: Action[] = [{ name: 'send', isLimit }, { name: 'delete' }]
 
   return (
     <Container w="100%">
@@ -40,7 +43,7 @@ export const DashBoard: FC = () => {
             w="100%"
           >
             {actionArr.map((action, index) => (
-              <ActionCard key={index} name={action.name} />
+              <ActionCard key={index} name={action.name} isLimit />
             ))}
           </SimpleGrid>
         </Stack>
