@@ -65,7 +65,7 @@ const Home = () => {
   const { data: session } = useSession()
 
   return (
-    <Layout label={!session ? 'Auth' : 'DashBoard'}>
+    <Layout label={!session ? 'Notion × Twitter' : 'DashBoard'}>
       <Center mt={40}>
         {!session?.user ? (
           <Container w="100%">
