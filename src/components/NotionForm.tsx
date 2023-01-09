@@ -63,13 +63,14 @@ export const NotionForm: FC<Props> = ({ mode }) => {
       showNotification({
         title: 'Success',
         message: 'Update your Database Infomation',
-        color: 'green',
+        color: 'green.6',
         icon: <IconEdit />,
 
-        // Fix responsive
         styles: (theme) => ({
           root: {
-            backgroundColor: theme.colors.green[7],
+            borderColor: theme.colors.green[6],
+
+            '&::before': { backgroundColor: theme.colors.green[6] },
           },
         }),
       })
