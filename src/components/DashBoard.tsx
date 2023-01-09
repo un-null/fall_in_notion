@@ -1,10 +1,11 @@
 import { FC } from 'react'
 
-import { Center, Grid, Stack } from '@mantine/core'
+import { Center, Container, SimpleGrid, Stack } from '@mantine/core'
 import { useSession } from 'next-auth/react'
 
 import { useQueryDatabaseInfo } from '../libs/notion'
 import { useQueryLimit } from '../libs/twitter'
+import { Action } from '../types'
 import { ActionCard } from './ActionCard'
 import { NotionForm } from './NotionForm'
 import { StorageCard } from './StorageCard'
@@ -15,10 +16,11 @@ export const DashBoard: FC = () => {
   const { data: databaseInfoCache } = useQueryDatabaseInfo()
   const { data: limitCache } = useQueryLimit()
 
-  const actionArr = [{ name: 'send' }, { name: 'delete' }]
+  const isLimit = limitCache === 75
+  const actionArr: Action[] = [{ name: 'send', isLimit }, { name: 'delete' }]
 
   return (
-    <div>
+    <Container w="100%">
       {!databaseInfoCache?.integration_token ||
       !databaseInfoCache?.database_id ? (
         <Center mt={40}>
@@ -34,15 +36,18 @@ export const DashBoard: FC = () => {
 
           <StorageCard limit={limitCache ? limitCache : 0} />
 
-          <Grid gutter={10}>
+          <SimpleGrid
+            cols={2}
+            breakpoints={[{ maxWidth: 430, cols: 1 }]}
+            maw={610}
+            w="100%"
+          >
             {actionArr.map((action, index) => (
-              <Grid.Col key={index} span={6}>
-                <ActionCard name={action.name} />
-              </Grid.Col>
+              <ActionCard key={index} name={action.name} isLimit={isLimit} />
             ))}
-          </Grid>
+          </SimpleGrid>
         </Stack>
       )}
-    </div>
+    </Container>
   )
 }

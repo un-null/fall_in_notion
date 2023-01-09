@@ -4,6 +4,7 @@ import Head from 'next/head'
 
 import { createStyles } from '@mantine/core'
 
+import { Footer } from './Footer'
 import { Header } from './Header'
 
 type Props = {
@@ -17,8 +18,11 @@ const useStyles = createStyles(() => ({
     minHeight: '100vh',
     margin: '0 auto',
     backgroundColor: '#FAFAFA',
+    display: 'grid',
+    gridTemplateRows: 'auto 1fr auto',
   },
   main: {
+    width: '100%',
     maxWidth: '1200px',
     margin: '0 auto',
     padding: '0 16px',
@@ -34,6 +38,7 @@ export const Layout: FC<Props> = ({ label, children }) => {
       </Head>
       <Header />
       <main className={classes.main}>{children}</main>
+      <Footer />
     </div>
   )
 }

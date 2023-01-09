@@ -8,3 +8,8 @@ export type LocalItem = {
   value: number
   expiry: number
 }
+
+export type Action = {
+  name: 'send' | 'delete'
+  isLimit?: boolean
+}
