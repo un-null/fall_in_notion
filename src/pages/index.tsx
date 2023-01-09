@@ -28,12 +28,8 @@ const FEATURES = [
     icon: IconHeartBroken,
     title: 'いいねツイートの解除',
     description:
-      '一度に最大75個の最新のいいねツイートのいいねを解除することができます。',
-  },
-  {
-    icon: IconSend,
-    title: 'title',
-    description: 'description',
+      // '一度に最大75個の最新のいいねツイートのいいねを解除することができます。',
+      '近日実装予定',
   },
 ]
 
@@ -65,7 +61,7 @@ const Home = () => {
   const { data: session } = useSession()
 
   return (
-    <Layout label={!session ? 'Notion × Twitter' : 'DashBoard'}>
+    <Layout label={!session ? 'Fall in Notion' : 'DashBoard'}>
       <Center mt={40}>
         {!session?.user ? (
           <Container w="100%">
@@ -77,7 +73,7 @@ const Home = () => {
                     <Text>
                       いいねしたツイートをNotionのデータベースで管理しましょう。
                       <br />
-                      また、いいねを即時取り消すこともできます。
+                      {/* また、いいねを即時取り消すこともできます。 */}
                     </Text>
                     <Group>
                       <Button
@@ -91,14 +87,13 @@ const Home = () => {
                       <Button
                         color="red.4"
                         component="a"
-                        // Fix Link ↓
-                        href="https://www.notion.so/ja-jp"
+                        href="https://www.notion.so/Notion-Twitter-55d4e1c9977e4c21882a5819c2bed275"
                         target="_blank"
                         rel="noopener noreferrer"
                         mt={20}
                         mb={5}
                       >
-                        使い方
+                        始め方
                       </Button>
                     </Group>
                   </div>
@@ -133,7 +128,7 @@ const Home = () => {
                 justify="center"
                 align="center"
               >
-                <Title order={1}>？を今すぐ使ってみる</Title>
+                <Title order={1}>Fall in Notion を今すぐ使ってみる</Title>
                 <Text size="lg" color="dimmed" mt={5}>
                   完全無料で使うことができます
                 </Text>

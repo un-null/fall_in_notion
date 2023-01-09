@@ -3,9 +3,11 @@ import { FC } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { Button, Center, createStyles, Flex } from '@mantine/core'
+import { Button, Center, createStyles, Flex, Text } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import { signIn, signOut, useSession } from 'next-auth/react'
+
+import Icon from '../../../public/svgs/fall-in-notion.svg'
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -17,6 +19,13 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: 'white',
     display: 'grid',
     placeItems: 'center',
+  },
+  link: {
+    textDecoration: 'none',
+    color: theme.colors.dark,
+  },
+  icon: {
+    display: 'block',
   },
 }))
 
@@ -38,7 +47,14 @@ export const Header: FC = () => {
         maw={1200}
         mx="auto"
       >
-        <Link href="/">Logo</Link>
+        <Link href="/" className={classes.link}>
+          <Flex justify="center" align="center" gap={5}>
+            <Icon width={28} height={28} className={classes.icon} />
+            <Text size="lg" weight="bold">
+              Fall in Notion
+            </Text>
+          </Flex>
+        </Link>
 
         {session ? (
           <Button
