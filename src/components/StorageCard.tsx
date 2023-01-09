@@ -1,6 +1,15 @@
 import { FC } from 'react'
 
-import { Card, Center, Grid, Progress, Stack, Text, Title } from '@mantine/core'
+import {
+  Card,
+  Center,
+  createStyles,
+  Grid,
+  Progress,
+  Stack,
+  Text,
+  Title,
+} from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import { IconHeart } from '@tabler/icons'
 
@@ -8,7 +17,15 @@ type Props = {
   limit: number
 }
 
+const useStyles = createStyles((theme) => ({
+  iconHeart: {
+    color: theme.colors.pink[6],
+    fill: theme.colors.pink[6],
+  },
+}))
+
 export const StorageCard: FC<Props> = ({ limit }) => {
+  const { classes } = useStyles()
   const media = useMediaQuery('(max-width: 430px)')
 
   return (
@@ -16,13 +33,12 @@ export const StorageCard: FC<Props> = ({ limit }) => {
       <Grid justify="space-between" align="center">
         <Grid.Col span={3}>
           <Center>
-            <IconHeart style={{ fill: '#f91980' }} color="#f91980" size={40} />
+            <IconHeart className={classes.iconHeart} size={40} />
           </Center>
         </Grid.Col>
         <Grid.Col span={9}>
           <Stack spacing={4}>
             <Title order={media ? 5 : 4}>Available Liked Tweets</Title>
-            {/* Fix Text UI ? ↓ */}
             <Text size="sm" color="dimmed" weight="bold">
               {limit}
               <Text span size="xs" color="dimmed" weight="bold" mx={4}>

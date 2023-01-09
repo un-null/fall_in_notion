@@ -138,7 +138,7 @@ const SendTweets: NextPage = () => {
                   size="lg"
                   weight={700}
                   className={classes.title}
-                  sx={{ color: '#fff' }}
+                  color="white"
                 >
                   Flow
                 </Text>

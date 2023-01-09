@@ -1,6 +1,14 @@
 import { FC, FormEvent } from 'react'
 
-import { Anchor, Button, Flex, Stack, Text, TextInput } from '@mantine/core'
+import {
+  Anchor,
+  Button,
+  createStyles,
+  Flex,
+  Stack,
+  Text,
+  TextInput,
+} from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { showNotification } from '@mantine/notifications'
 import { IconEdit, IconQuestionCircle } from '@tabler/icons'
@@ -15,7 +23,15 @@ type Props = {
   mode: 'register' | 'edit'
 }
 
+const useStyles = createStyles((theme) => ({
+  select: {
+    cursor: 'pointer',
+    ':hover': { color: theme.colors.cyan[6] },
+  },
+}))
+
 export const NotionForm: FC<Props> = ({ mode }) => {
+  const { classes } = useStyles()
   const { data: session } = useSession()
 
   const { updateDatabaseInfo } = useMutateDatabaseInfo()
@@ -111,10 +127,7 @@ export const NotionForm: FC<Props> = ({ mode }) => {
             justify="center"
             align="center"
             c="dark"
-            sx={{
-              cursor: 'pointer',
-              ':hover': { color: '#1DA1F2' },
-            }}
+            className={classes.select}
           >
             <IconQuestionCircle size={16} />
             <Anchor
@@ -122,9 +135,7 @@ export const NotionForm: FC<Props> = ({ mode }) => {
               target="_blank"
               rel="noopener noreferrer"
               color="dark"
-              sx={{
-                ':hover': { color: '#1DA1F2' },
-              }}
+              className={classes.select}
             >
               What is Integration Token, Database ID
             </Anchor>

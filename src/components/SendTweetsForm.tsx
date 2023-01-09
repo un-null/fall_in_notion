@@ -30,7 +30,6 @@ export const SendTweetsForm: FC = () => {
   const handleSubmit: ComponentProps<'form'>['onSubmit'] = async (e) => {
     e.preventDefault()
 
-    // Fix Review ↓
     try {
       setCount(1)
       await sendTweetsMutation.mutateAsync(limit)

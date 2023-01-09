@@ -29,7 +29,13 @@ type Props = {
 }
 
 const useStyles = createStyles(() => ({
-  icon: {
+  textGroup: {
+    cursor: 'pointer',
+    '&:hover': {
+      color: '#1DA1F2',
+    },
+  },
+  chevronRight: {
     '&:hover': {
       color: '#1DA1F2',
     },
@@ -92,10 +98,7 @@ export const UserCard: FC<Partial<Props>> = ({ name, email, image }) => {
               DataTable
             </Text>
           </Group>
-          <Group
-            spacing="xs"
-            sx={{ cursor: 'pointer', ':hover': { color: '#1DA1F2' } }}
-          >
+          <Group spacing="xs" className={classes.textGroup}>
             <Text
               size={media ? 'xs' : 'sm'}
               weight="bold"
@@ -103,7 +106,7 @@ export const UserCard: FC<Partial<Props>> = ({ name, email, image }) => {
             >
               {opened ? 'Close' : 'Confirm'}
             </Text>
-            <IconChevronRight size={16} className={classes.icon} />
+            <IconChevronRight size={16} className={classes.chevronRight} />
           </Group>
         </Flex>
 

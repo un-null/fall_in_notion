@@ -1,6 +1,13 @@
 import { FC } from 'react'
 
-import { ActionIcon, Card, Center, Flex, Text } from '@mantine/core'
+import {
+  ActionIcon,
+  Card,
+  Center,
+  createStyles,
+  Flex,
+  Text,
+} from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import {
   IconBrandNotion,
@@ -11,10 +18,33 @@ import {
 
 import { Action } from '../types'
 
+const useStyles = createStyles((theme, { color }: { color: string }) => {
+  return {
+    card: {
+      ':hover': {
+        color: color,
+        cursor: 'pointer',
+      },
+    },
+    actionIcon: {
+      '&:hover': {
+        backgroundColor: theme.white,
+      },
+    },
+    chevronsRight: {
+      '&:hover': {
+        backgroundColor: theme.colors.gray[6],
+      },
+    },
+  }
+})
+
 type Props = Action
 
 export const ActionCard: FC<Props> = ({ name, isLimit }) => {
   const color = name === 'delete' ? '#868e96' : '#1DA1F2'
+  const { classes } = useStyles({ color })
+
   const media = useMediaQuery('(max-width: 430px)')
 
   return (
@@ -24,11 +54,11 @@ export const ActionCard: FC<Props> = ({ name, isLimit }) => {
       shadow="md"
       component="a"
       href={name === 'send' ? (isLimit ? undefined : 'sendTweets') : undefined}
-      sx={{ ':hover': { color: color, cursor: 'pointer' } }}
+      className={classes.card}
     >
       {name === 'send' ? (
         <Flex justify="center" align="center" gap="xs" my={20}>
-          <ActionIcon sx={{ ':hover': { backgroundColor: 'white' } }}>
+          <ActionIcon className={classes.actionIcon}>
             <IconHeart
               color={isLimit ? '#868e96' : '#f91980'}
               style={{ fill: isLimit ? '#868e96' : '#f91980' }}
@@ -38,13 +68,11 @@ export const ActionCard: FC<Props> = ({ name, isLimit }) => {
           <ActionIcon
             variant="filled"
             size={16}
-            sx={{
-              ':hover': { backgroundColor: '#868E96' },
-            }}
+            className={classes.chevronsRight}
           >
             <IconChevronsRight size={16} />
           </ActionIcon>
-          <ActionIcon sx={{ ':hover': { backgroundColor: 'white' } }}>
+          <ActionIcon className={classes.actionIcon}>
             <IconBrandNotion size={28} color={isLimit ? '#868e96' : 'black'} />
           </ActionIcon>
         </Flex>
