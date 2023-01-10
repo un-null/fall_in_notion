@@ -7,7 +7,7 @@ import { Button, Center, createStyles, Flex, Text } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import { signIn, signOut, useSession } from 'next-auth/react'
 
-import Icon from '../../../public/svgs/fall-in-notion.svg'
+import Logo from '../../assets/svgs/logo.svg'
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -49,7 +49,7 @@ export const Header: FC = () => {
       >
         <Link href="/" className={classes.link}>
           <Flex justify="center" align="center" gap={5}>
-            <Icon width={28} height={28} className={classes.icon} />
+            <Logo width={28} height={28} className={classes.icon} />
             <Text size="lg" weight="bold">
               Fall in Notion
             </Text>
