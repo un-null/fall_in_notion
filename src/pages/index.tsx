@@ -14,6 +14,7 @@ import {
 import { IconHeartBroken, IconSend } from '@tabler/icons'
 import { signIn, useSession } from 'next-auth/react'
 
+import Logo from '../assets/svgs/logo.svg'
 import { DashBoard } from '../components'
 import { Layout } from '../components/Layout'
 
@@ -40,13 +41,13 @@ const useStyles = createStyles((theme) => ({
 
     [theme.fn.smallerThan('md')]: {
       maxWidth: '100%',
-      marginRight: 0,
+      marginRight: 10,
     },
   },
 
   hero_image: {
     flex: 1,
-    [theme.fn.smallerThan('md')]: {
+    [theme.fn.smallerThan('sm')]: {
       display: 'none',
     },
   },
@@ -97,7 +98,9 @@ const Home = () => {
                       </Button>
                     </Group>
                   </div>
-                  <div className={classes.hero_image}></div>
+                  <div className={classes.hero_image}>
+                    <Logo width={300} height={300} />
+                  </div>
                 </Center>
               </Flex>
             </section>
