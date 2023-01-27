@@ -78,7 +78,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             },
           },
         })
-        await sleep(334)
+        await sleep(330)
       }
       res.status(200).json({ message: 'OK' })
     }
