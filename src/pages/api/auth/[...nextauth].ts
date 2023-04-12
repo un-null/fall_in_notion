@@ -72,9 +72,9 @@ export const authOptions: NextAuthOptions = {
         session.user.oauth_token_secret = token.oauth_token_secret
         session.user.account_id = token.account_id
 
-        session.user.user_id = data.id
-        session.user.integration_token = data.integration_token
-        session.user.database_id = data.database_id
+        session.user.user_id = data?.id
+        session.user.integration_token = data?.integration_token
+        session.user.database_id = data?.database_id
       }
 
       const twitter = new TwitterApi({

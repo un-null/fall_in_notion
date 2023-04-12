@@ -6,6 +6,10 @@ module.exports = {
       gridTemplateRows: {
         layout: 'auto 1fr auto',
       },
+      // screens: {
+      //   xs: '430px',
+      //   ...defaultTheme.screens,
+      // },
     },
   },
   plugins: [],

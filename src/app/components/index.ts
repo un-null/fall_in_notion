@@ -1,1 +1,1 @@
-export {}
+export { DashBoard } from './DashBoard'
