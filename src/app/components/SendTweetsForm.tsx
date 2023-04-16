@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation'
 import { DoubleArrowRightIcon } from '@radix-ui/react-icons'
 import Balancer from 'react-wrap-balancer'
 
+import { FormContext, FormDispatchContext } from '../libs/context'
 import { useMutateTweets, useQueryLimit } from '../libs/twitter'
-import { FormContext, FormDispatchContext } from '../sendTweets/page'
 
 export const SendTweetsForm: FC = () => {
   const router = useRouter()

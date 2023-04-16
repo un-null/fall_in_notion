@@ -1,34 +1,13 @@
 'use client'
-import { createContext, Dispatch, SetStateAction, useState } from 'react'
-
-import { NextPage } from 'next'
+import { useState } from 'react'
 
 import { Aside } from '../components/Layout/Aside'
 import { SendTweetsForm } from '../components/SendTweetsForm'
+import { FormContext, FormDispatchContext } from '../libs/context'
 
-export const FormContext = createContext<{
-  limit: number | undefined
-  count: number
-}>({
-  limit: 0,
-  count: 0,
-})
-
-export const FormDispatchContext = createContext<{
-  setLimit: Dispatch<SetStateAction<number | undefined>>
-  setCount: Dispatch<SetStateAction<number>>
-}>({
-  setLimit: () => {
-    throw new Error('No default value!')
-  },
-  setCount: () => {
-    throw new Error('No default value!')
-  },
-})
-
-const SendTweets: NextPage = () => {
+const SendTweets = () => {
   const [count, setCount] = useState(1)
-  const [limit, setLimit] = useState<number | undefined>(1)
+  const [limit, setLimit] = useState<number | undefined>(0)
 
   const STEPS = ['How many send Likes', 'Sending ...', 'Completed']
 
