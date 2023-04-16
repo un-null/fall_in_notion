@@ -4,12 +4,14 @@ module.exports = {
   theme: {
     extend: {
       gridTemplateRows: {
-        layout: 'auto 1fr auto',
+        layout: 'auto 1fr',
+        aside: '1fr auto',
       },
-      // screens: {
-      //   xs: '430px',
-      //   ...defaultTheme.screens,
-      // },
+      colors: {
+        'twitter-blue': '#1DA1F2',
+        'twitter-pink': '#F91980',
+        'notion-red': '#EB5757',
+      },
     },
   },
   plugins: [],
