@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation'
 
 import { signIn, signOut, useSession } from 'next-auth/react'
 
-import Logo from '../../../assets/svgs/logo.svg'
+import Logo from '../../assets/svgs/logo.svg'
 
 export const Header: FC = () => {
   const { data: session } = useSession()

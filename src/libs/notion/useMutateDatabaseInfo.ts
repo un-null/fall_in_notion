@@ -2,7 +2,7 @@ import { createClient } from '@supabase/supabase-js'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 
-import { NotionDatabase } from '../../../types'
+import { NotionDatabase } from '../../types'
 
 export const useMutateDatabaseInfo = () => {
   const queryClient = useQueryClient()

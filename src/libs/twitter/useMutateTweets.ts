@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 
-import { LocalItem } from '../../../types'
+import { LocalItem } from '../../types'
 
 export const useMutateTweets = () => {
   const sendTweetsMutation = useMutation(

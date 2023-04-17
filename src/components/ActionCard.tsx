@@ -7,7 +7,7 @@ import {
   NotionLogoIcon,
 } from '@radix-ui/react-icons'
 
-import { Action } from '../../types'
+import { Action } from '../types'
 
 type Props = Action
 

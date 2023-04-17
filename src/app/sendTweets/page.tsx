@@ -1,9 +1,9 @@
 'use client'
 import { useState } from 'react'
 
-import { Aside } from '../components/Layout/Aside'
-import { SendTweetsForm } from '../components/SendTweetsForm'
-import { FormContext, FormDispatchContext } from '../libs/context'
+import { Aside } from '../../components/Layout/Aside'
+import { SendTweetsForm } from '../../components/SendTweetsForm'
+import { FormContext, FormDispatchContext } from '../../libs/context'
 
 const SendTweets = () => {
   const [count, setCount] = useState(1)

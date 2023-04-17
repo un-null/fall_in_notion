@@ -8,7 +8,7 @@ import { Aside } from './Layout/Aside'
 import { NotionForm } from './NotionForm'
 import { StorageCard } from './StorageCard'
 import { UserCard } from './UserCard'
-import { Action } from '../../types'
+import { Action } from '../types'
 import { useQueryDatabaseInfo } from '../libs/notion'
 import { useQueryLimit } from '../libs/twitter'
 

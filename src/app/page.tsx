@@ -4,9 +4,9 @@ import { LockOpen2Icon, PaperPlaneIcon } from '@radix-ui/react-icons'
 import { signIn, useSession } from 'next-auth/react'
 import Balancer from 'react-wrap-balancer'
 
-import { DashBoard } from './components'
-import { Footer } from './components/Layout'
 import Logo from '../assets/svgs/logo.svg'
+import { DashBoard } from '../components'
+import { Footer } from '../components/Layout'
 
 const FEATURES = [
   {

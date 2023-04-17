@@ -1,10 +1,10 @@
 'use client'
 
-import './libs/Tailwind.css'
+import '../libs/Tailwind.css'
 import { FC, ReactNode } from 'react'
 
 import ProvidersWrapper from './ProvidersWrapper'
-import { Header } from './components/Layout'
+import { Header } from '../components/Layout'
 
 type Props = {
   children: ReactNode
