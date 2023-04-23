@@ -1,13 +1,16 @@
+'use client'
 import { FC } from 'react'
 
 import { HeartFilledIcon } from '@radix-ui/react-icons'
 import * as Progress from '@radix-ui/react-progress'
 
-type Props = {
-  limit: number
-}
+import { fetchLimit } from '../libs/twitter'
 
-export const StorageCard: FC<Props> = ({ limit }) => {
+export const StorageCard: FC = () => {
+  const limitCache = fetchLimit()
+
+  const limit = limitCache ? limitCache : 0
+
   return (
     <div className="w-full max-w-2xl shadow mt-10 py-4">
       <div className="flex justify-between items-center">
@@ -28,11 +31,11 @@ export const StorageCard: FC<Props> = ({ limit }) => {
           <Progress.Root
             value={limit}
             max={75}
-            className="w-[90%] md:w-[60%] h-2 rounded relative overflow-hidden bg-gray-200"
+            className="w-[75%] h-2 rounded relative overflow-hidden bg-gray-200"
           >
             <Progress.Indicator
-              className="bg-twitter-pink w-full h-full"
-              style={{ transform: `translateX(-${75 - limit}%)` }}
+              className="bg-twitter-pink w-[75%] h-full"
+              style={{ transform: `translateX(-${100 - limit}%)` }}
             />
           </Progress.Root>
         </div>

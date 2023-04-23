@@ -1,2 +1,2 @@
 export { useMutateTweets } from './useMutateTweets'
-export { useQueryLimit } from './useQueryLimit'
+export { fetchLimit } from './fetchLimit'

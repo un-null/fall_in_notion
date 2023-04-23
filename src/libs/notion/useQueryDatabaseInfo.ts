@@ -20,19 +20,15 @@ export const useQueryDatabaseInfo = () => {
   )
 
   const getDatabaseInfo = async () => {
-    if (session?.user) {
-      const { data, error } = await supabase
-        .from('users')
-        .select('integration_token, database_id')
-        .eq('id', session?.user.user_id)
-        .single()
+    const { data, error } = await supabase
+      .from('users')
+      .select('integration_token, database_id')
+      .eq('id', session?.user.user_id)
+      .single()
 
-      if (error) throw new Error(`${error.code} : ${error.message}`)
+    if (error) throw new Error(`${error.code} : ${error.message}`)
 
-      return data
-    }
-    // Fix need auth ? ↓
-    return alert('user does not exist')
+    return data
   }
 
   return useQuery({

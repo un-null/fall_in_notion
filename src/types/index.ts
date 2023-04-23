@@ -11,5 +11,4 @@ export type LocalItem = {
 
 export type Action = {
   name: 'send' | 'delete'
-  isLimit?: boolean
 }

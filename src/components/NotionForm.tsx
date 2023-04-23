@@ -1,44 +1,47 @@
+'use client'
 import { ComponentProps, FC, useState } from 'react'
 
+import { redirect } from 'next/navigation'
+
 import { QuestionMarkCircledIcon } from '@radix-ui/react-icons'
-import { useSession } from 'next-auth/react'
 
 import { useMutateDatabaseInfo } from '../libs/notion'
 
 // Fix name ↓
 type Props = {
   mode: 'register' | 'edit'
+  integration?: string
+  database?: string
 }
 
-export const NotionForm: FC<Props> = ({ mode }) => {
-  const { data: session } = useSession()
-
-  const [iToken, setIToken] = useState(session?.user.integration_token)
-  const [databaseId, setDatabaseId] = useState(session?.user.database_id)
+export const NotionForm: FC<Props> = ({
+  mode,
+  integration = '',
+  database = '',
+}) => {
+  const [iToken, setIToken] = useState(integration)
+  const [databaseId, setDatabaseId] = useState(database)
 
   const { updateDatabaseInfo } = useMutateDatabaseInfo()
 
-  const handleSubmit: ComponentProps<'form'>['onSubmit'] = (e) => {
-    e.preventDefault()
-
-    try {
-      updateDatabaseInfo.mutate({
-        integration_token: iToken,
-        database_id: databaseId,
-      })
-    } catch (error: any) {
-      alert(error.message)
-    }
+  const handleSubmit: ComponentProps<'form'>['onSubmit'] = () => {
+    updateDatabaseInfo.mutate({
+      integration_token: iToken,
+      database_id: databaseId,
+    })
+    redirect('/app')
   }
 
   return (
-    <div>
+    <div className="w-full max-w-lg mx-auto">
       {mode === 'register' && (
-        <p className="mt-5 text-xl font-bold">Notion Form</p>
+        <h4 className="my-10 text-2xl text-center font-bold">
+          Connect to Notion
+        </h4>
       )}
 
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-col justify-center items-stretch mt-5">
+      <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+        <div>
           <label className="text-xs font-medium">Integration Token</label>
           <input
             type="text"
@@ -46,36 +49,37 @@ export const NotionForm: FC<Props> = ({ mode }) => {
             placeholder="secret_"
             value={iToken}
             onChange={(e) => setIToken(e.target.value)}
-            className="w-full px-3 py-2 mt-1 my-4 text-sm bg-transparent outline-none border focus:border-notion-red rounded"
+            className="w-full mt-2 px-3 py-2 mb-4 text-sm bg-transparent outline-none border focus:border-notion-red rounded"
           />
+        </div>
+        <div>
           <label className="text-xs font-medium">Database ID</label>
           <input
             type="text"
             required
-            placeholder="secret_"
             value={databaseId}
             onChange={(e) => setDatabaseId(e.target.value)}
-            className="w-full px-3 py-2 mt-1 text-sm bg-transparent outline-none border focus:border-notion-red rounded"
+            className="w-full mt-2 px-3 py-2 mb-4 text-sm bg-transparent outline-none border focus:border-notion-red rounded"
           />
+        </div>
 
-          <button
-            type="submit"
-            disabled={iToken === '' || databaseId === ''}
-            className="w-full bg-notion-red hover:bg-red-500 mt-4 mx-auto py-1 px-4 rounded text-sm font-medium text-white disabled:bg-gray-300"
+        <button
+          type="submit"
+          disabled={iToken === '' || databaseId === ''}
+          className="w-full bg-notion-red hover:bg-red-500 mt-4 mx-auto py-1 px-4 sm:py-2 rounded text-sm font-medium text-white disabled:bg-gray-300"
+        >
+          {mode === 'register' ? 'Register' : 'Update'}
+        </button>
+        <div className="mt-2 flex justify-center items-center space-x-1 text-gray-500 hover:text-notion-red">
+          <QuestionMarkCircledIcon width={12} height={12} />
+          <a
+            href="https://developers.notion.com/docs/create-a-notion-integration"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-xs"
           >
-            {mode === 'register' ? 'Register' : 'Update'}
-          </button>
-          <div className="mt-2 flex justify-center items-center space-x-1 text-gray-500 hover:text-notion-red">
-            <QuestionMarkCircledIcon width={12} height={12} />
-            <a
-              href="https://developers.notion.com/docs/create-a-notion-integration"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-xs"
-            >
-              What is Integration Token, Database ID
-            </a>
-          </div>
+            What is Integration Token, Database ID
+          </a>
         </div>
       </form>
     </div>

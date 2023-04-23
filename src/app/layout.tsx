@@ -1,5 +1,4 @@
 'use client'
-
 import '../libs/Tailwind.css'
 import { FC, ReactNode } from 'react'
 

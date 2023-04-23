@@ -7,7 +7,7 @@ import { DoubleArrowRightIcon } from '@radix-ui/react-icons'
 import Balancer from 'react-wrap-balancer'
 
 import { FormContext, FormDispatchContext } from '../libs/context'
-import { useMutateTweets, useQueryLimit } from '../libs/twitter'
+import { fetchLimit, useMutateTweets } from '../libs/twitter'
 
 export const SendTweetsForm: FC = () => {
   const router = useRouter()
@@ -15,7 +15,7 @@ export const SendTweetsForm: FC = () => {
   const { count, limit } = useContext(FormContext)
   const { setCount, setLimit } = useContext(FormDispatchContext)
 
-  const { data: limitCache } = useQueryLimit()
+  const limitCache = fetchLimit()
   const { sendTweetsMutation } = useMutateTweets()
 
   const max = limitCache ? 75 - limitCache : 75
@@ -87,7 +87,7 @@ export const SendTweetsForm: FC = () => {
             </p>
           </div>
           <button
-            onClick={() => router.push('/')}
+            onClick={() => router.push('/app')}
             className="bg-notion-red hover:bg-red-500 py-2 px-4 rounded text-sm font-medium text-white flex items-center mt-4"
           >
             Go Home

@@ -1,5 +1,7 @@
 import { FC } from 'react'
 
+import Link from 'next/link'
+
 import {
   DoubleArrowRightIcon,
   HeartIcon,
@@ -7,14 +9,19 @@ import {
   NotionLogoIcon,
 } from '@radix-ui/react-icons'
 
+import { fetchLimit } from '../libs/twitter'
 import { Action } from '../types'
 
 type Props = Action
 
-export const ActionCard: FC<Props> = ({ name, isLimit }) => {
+export const ActionCard: FC<Props> = ({ name }) => {
+  const limit = fetchLimit()
+
   return (
-    <a
-      href={name === 'send' ? (isLimit ? undefined : 'sendTweets') : undefined}
+    <Link
+      href={
+        name === 'send' ? (limit === 75 ? '/app' : '/app/sendTweets') : '/app'
+      }
       className="w-full min-w-full sm:min-w-0 shadow gap-4 py-4 hover:text-notion-red"
     >
       {name === 'send' ? (
@@ -31,6 +38,6 @@ export const ActionCard: FC<Props> = ({ name, isLimit }) => {
       <p className="text-sm font-medium text-center">
         {name === 'delete' ? 'Broken ♡' : 'Send ♡ To Notion'}
       </p>
-    </a>
+    </Link>
   )
 }
