@@ -1,12 +1,11 @@
 import { Client } from '@notionhq/client'
-import { NextApiRequest, NextApiResponse } from 'next'
 import { getServerSession } from 'next-auth'
 import { TwitterApi } from 'twitter-api-v2'
 
 import { authOptions } from '../auth/[...nextauth]/route'
 
 // Fix rename ↓
-export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
+export const POST = async (req: any, res: any) => {
   const session = await getServerSession(req, res, authOptions)
 
   // Fix type ↓
