@@ -1,26 +1,24 @@
+import { NextRequest, NextResponse } from 'next/server'
+
 import { Client } from '@notionhq/client'
 import { getServerSession } from 'next-auth'
 import { TwitterApi } from 'twitter-api-v2'
 
 import { authOptions } from '../auth/[...nextauth]/route'
 
-// Fix rename ↓
-export const POST = async (req: any, res: any) => {
-  const session = await getServerSession(req, res, authOptions)
+export const POST = async (req: NextRequest) => {
+  const session = await getServerSession(authOptions)
 
-  // Fix type ↓
-  const limit = req.body
-
-  console.log(limit)
+  const limit: number = await req.json()
 
   if (!session || !session.user.account_id) {
-    return res.status(401).json({ message: 'You must be logged in.' })
+    return NextResponse.json({ message: 'You must be logged in.' })
   }
 
   if (req.method !== 'POST') {
-    return res
-      .status(405)
-      .json({ message: `${req.method} requests are not allowed` })
+    return NextResponse.json({
+      message: `${req.method} requests are not allowed`,
+    })
   }
 
   try {
@@ -78,13 +76,13 @@ export const POST = async (req: any, res: any) => {
             },
           },
         })
+        console.log(tweet.text)
         await sleep(300)
       }
-      res.status(200).json({ message: 'OK' })
     }
-
     // insertNotionDb()
+    NextResponse.json({ message: 'OK' })
   } catch (error) {
-    res.status(500).json({ message: 'Error' })
+    NextResponse.json({ message: 'Error' })
   }
 }
