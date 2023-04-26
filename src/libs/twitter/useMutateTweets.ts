@@ -5,7 +5,7 @@ import { LocalItem } from '../../types'
 export const useMutateTweets = () => {
   const sendTweetsMutation = useMutation(
     async (limit: number | undefined) => {
-      await fetch('/api/twitter/getLikedTweets', {
+      await fetch('/api/twitter', {
         method: 'POST',
         headers: {
           'Content-Type': 'application.json',
@@ -35,27 +35,6 @@ export const useMutateTweets = () => {
             )
           }
         }
-
-        alert('Sending completed!')
-      },
-      onError: (error: Error) => {
-        alert(error.message)
-      },
-    }
-  )
-  const removeTweetsMutation = useMutation(
-    async (limit: number | undefined) => {
-      await fetch('api/twitter/removeLikedTweets', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application.json',
-        },
-        body: JSON.stringify(limit),
-      })
-    },
-    {
-      onSuccess: () => {
-        alert('Removeing completed')
       },
       onError: (error: Error) => {
         alert(error.message)
@@ -63,5 +42,38 @@ export const useMutateTweets = () => {
     }
   )
 
-  return { sendTweetsMutation, removeTweetsMutation }
+  return { sendTweetsMutation }
 }
+
+// export const fetchTweets = async (limit: number | undefined) => {
+//   try {
+//     await fetch('/api/twitter', {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application.json' },
+//       body: JSON.stringify(limit),
+//     })
+//     return limit
+//   } catch (error: any) {
+//     alert(error.message)
+//   } finally {
+//     if (limit) {
+//       const prevLocal = localStorage.getItem('limit')
+
+//       if (prevLocal) {
+//         const localItem: LocalItem = JSON.parse(prevLocal)
+//         const cloneItem = { ...localItem }
+//         cloneItem.value = localItem.value + limit
+
+//         localStorage.setItem('limit', JSON.stringify(cloneItem))
+//       } else {
+//         localStorage.setItem(
+//           'limit',
+//           JSON.stringify({
+//             value: limit,
+//             expiry: new Date().getTime() + 60 * 15 * 1000,
+//           })
+//         )
+//       }
+//     }
+//   }
+// }

@@ -1,4 +1,8 @@
-export const Spinner = ({ color = 'border-blue-500' }: { color?: string }) => {
+export const Spinner = ({
+  color = 'border-notion-red',
+}: {
+  color?: string
+}) => {
   return (
     <div className="my-16 flex justify-center">
       <div

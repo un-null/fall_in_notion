@@ -3,7 +3,11 @@ import { redirect } from 'next/navigation'
 import { getServerSession } from 'next-auth'
 
 import { NotionForm } from '../../../components/NotionForm'
-import { authOptions } from '../../../pages/api/auth/[...nextauth]'
+import { authOptions } from '../../api/auth/[...nextauth]/route'
+
+export const metadata = {
+  title: 'Register',
+}
 
 const RegisterPage = async () => {
   const session = await getServerSession(authOptions)

@@ -4,10 +4,10 @@ import { LockOpen2Icon, PaperPlaneIcon } from '@radix-ui/react-icons'
 import { getServerSession } from 'next-auth'
 import Balancer from 'react-wrap-balancer'
 
+import { authOptions } from './api/auth/[...nextauth]/route'
 import Logo from '../assets/svgs/logo.svg'
 import { Button } from '../components/Button'
 import { Footer } from '../components/Layout'
-import { authOptions } from '../pages/api/auth/[...nextauth]'
 
 const FEATURES = [
   {
@@ -22,6 +22,17 @@ const FEATURES = [
     description: '近日実装予定',
   },
 ]
+
+export const metadata = {
+  title: 'Fall in Notion',
+  openGraph: {
+    title: 'Fall in Notion',
+    url: 'https://fall-in-notion.vercel.app/',
+  },
+  robots: {
+    index: true,
+  },
+}
 
 const Page = async () => {
   const session = await getServerSession(authOptions)

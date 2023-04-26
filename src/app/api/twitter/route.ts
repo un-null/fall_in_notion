@@ -1,17 +1,18 @@
 import { Client } from '@notionhq/client'
-import { unstable_getServerSession } from 'next-auth'
+import { NextApiRequest, NextApiResponse } from 'next'
+import { getServerSession } from 'next-auth'
 import { TwitterApi } from 'twitter-api-v2'
 
-import { authOptions } from '../auth/[...nextauth]'
-
-import type { NextApiRequest, NextApiResponse } from 'next'
+import { authOptions } from '../auth/[...nextauth]/route'
 
 // Fix rename ↓
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const session = await unstable_getServerSession(req, res, authOptions)
+export const POST = async (req: NextApiRequest, res: NextApiResponse) => {
+  const session = await getServerSession(req, res, authOptions)
 
   // Fix type ↓
   const limit = req.body
+
+  console.log(limit)
 
   if (!session || !session.user.account_id) {
     return res.status(401).json({ message: 'You must be logged in.' })
@@ -78,15 +79,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             },
           },
         })
-        await sleep(330)
+        await sleep(300)
       }
       res.status(200).json({ message: 'OK' })
     }
 
-    insertNotionDb()
+    // insertNotionDb()
   } catch (error) {
     res.status(500).json({ message: 'Error' })
   }
 }
-
-export default handler

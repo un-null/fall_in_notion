@@ -1,5 +1,3 @@
-import { FC } from 'react'
-
 import Image from 'next/image'
 
 import {
@@ -8,24 +6,13 @@ import {
   NotionLogoIcon,
   TwitterLogoIcon,
 } from '@radix-ui/react-icons'
+import { getServerSession } from 'next-auth'
 
 import { NotionForm } from './NotionForm'
+import { authOptions } from '../app/api/auth/[...nextauth]/route'
 
-type Props = {
-  name?: string | null
-  email?: string | null
-  image?: string | null
-  iToken: string | undefined
-  databaseId: string | undefined
-}
-
-export const UserCard: FC<Partial<Props>> = ({
-  name,
-  email,
-  image,
-  iToken,
-  databaseId,
-}) => {
+export const UserCard = async () => {
+  const session = await getServerSession(authOptions)
   return (
     <div className="w-full max-w-2xl shadow rounded">
       <div className="flex justify-between items-stretch px-4 pt-4">
@@ -34,7 +21,7 @@ export const UserCard: FC<Partial<Props>> = ({
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href={`https://twitter.com/${name}`}
+              href={`https://twitter.com/${session?.user.name}`}
               className="p-2 sm:p-3 border hover:text-twitter-blue rounded"
             >
               <TwitterLogoIcon
@@ -46,7 +33,7 @@ export const UserCard: FC<Partial<Props>> = ({
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href={`https://www.notion.so/${databaseId}`}
+              href={`https://www.notion.so/${session?.user.database_id}`}
               className="p-2 sm:p-3 border hover:text-notion-red rounded"
             >
               <NotionLogoIcon
@@ -57,10 +44,10 @@ export const UserCard: FC<Partial<Props>> = ({
             </a>
           </div>
 
-          <a className="text-lg font-bold">@{name}</a>
+          <a className="text-lg font-bold">@{session?.user.name}</a>
         </div>
         <Image
-          src={image ? image : ''}
+          src={session?.user.image ? session.user.image : ''}
           alt=""
           width={96}
           height={96}
@@ -69,7 +56,7 @@ export const UserCard: FC<Partial<Props>> = ({
         />
       </div>
 
-      <p className="text-sm text-gray-500 px-4 py-3">{email}</p>
+      <p className="text-sm text-gray-500 px-4 py-3">{session?.user.email}</p>
 
       <details className="bg-gray-100 p-4 group">
         <summary className="flex justify-between">
@@ -97,7 +84,11 @@ export const UserCard: FC<Partial<Props>> = ({
         </summary>
 
         <div className="my-5 grid place-items-center">
-          <NotionForm mode="edit" integration={iToken} database={databaseId} />
+          <NotionForm
+            mode="edit"
+            integration={session?.user.integration_token}
+            database={session?.user.database_id}
+          />
         </div>
       </details>
     </div>

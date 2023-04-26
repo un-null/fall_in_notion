@@ -5,8 +5,12 @@ import { getServerSession } from 'next-auth'
 import { ActionCard } from '../../components/ActionCard'
 import { StorageCard } from '../../components/StorageCard'
 import { UserCard } from '../../components/UserCard'
-import { authOptions } from '../../pages/api/auth/[...nextauth]'
 import { Action } from '../../types'
+import { authOptions } from '../api/auth/[...nextauth]/route'
+
+export const metadata = {
+  title: 'DashBoard',
+}
 
 const App = async () => {
   const session = await getServerSession(authOptions)
@@ -24,13 +28,8 @@ const App = async () => {
   return (
     <div className="w-full flex h-full px-4">
       <div className="flex-1 flex flex-col items-center mt-5">
-        <UserCard
-          name={session.user.name}
-          email={session.user.email}
-          image={session.user.image}
-          iToken={session.user.integration_token}
-          databaseId={session.user.database_id}
-        />
+        {/* @ts-expect-error Server Component */}
+        <UserCard />
 
         <StorageCard />
 
